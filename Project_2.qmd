@@ -3,4 +3,35 @@ title: "Project 2"
 author: "Evan Whitfield"
 format: html
 ---
+```{r}
+library(tidyr)
+library(readr)
+library(dplyr)
+```
 
+
+# Data Exploration
+
+
+```{r}
+data <- read_csv("data/NFL_play_data.csv")
+```
+```{r}
+dim(data)
+str(data, max_level=1)
+```
+
+```{r}
+pan_play_data <- data |>
+  filter(posteam == "CAR")
+
+dim(pan_play_data)
+```
+
+
+```{r}
+pan_rp_play_data <- pan_play_data |>
+  filter(PlayType %in% c("Run", "Pass"))
+
+dim(pan_rp_play_data)
+```

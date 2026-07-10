@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Evan Whitfield">
+
+<title>Project 2</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Project_2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Project_2_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Project_2_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Project_2_files/libs/quarto-html/popper.min.js"></script>
+<script src="Project_2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Project_2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Project_2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Project_2_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Project_2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Project_2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Project_2_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Project 2</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Evan Whitfield </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyr' was built under R version 4.4.3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readr' was built under R version 4.4.1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.4.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+</div>
+<section id="data-exploration" class="level1">
+<h1>Data Exploration</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/NFL_play_data.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat &lt;- vroom(...)
+  problems(dat)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 362447 Columns: 102
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (34): SideofField, posteam, DefensiveTeam, desc, ExPointResult, TwoPoin...
+dbl  (64): GameID, Drive, qtr, down, TimeUnder, TimeSecs, PlayTimeDiff, yrdl...
+lgl   (2): DefTwoPoint, BlockingPlayer
+date  (1): Date
+time  (1): time
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 362447    102</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data, <span class="at">max_level=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [362,447 × 102] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ Date                       : Date[1:362447], format: "2009-09-10" "2009-09-10" ...
+ $ GameID                     : num [1:362447] 2.01e+09 2.01e+09 2.01e+09 2.01e+09 2.01e+09 ...
+ $ Drive                      : num [1:362447] 1 1 1 1 1 2 2 2 2 3 ...
+ $ qtr                        : num [1:362447] 1 1 1 1 1 1 1 1 1 1 ...
+ $ down                       : num [1:362447] NA 1 2 3 4 1 2 3 4 1 ...
+ $ time                       : 'hms' num [1:362447] 15:00:00 14:53:00 14:16:00 13:35:00 ...
+  ..- attr(*, "units")= chr "secs"
+ $ TimeUnder                  : num [1:362447] 15 15 15 14 14 14 13 13 12 12 ...
+ $ TimeSecs                   : num [1:362447] 3600 3593 3556 3515 3507 ...
+ $ PlayTimeDiff               : num [1:362447] 0 7 37 41 8 11 36 29 37 10 ...
+ $ SideofField                : chr [1:362447] "TEN" "PIT" "PIT" "PIT" ...
+ $ yrdln                      : num [1:362447] 30 42 47 44 44 2 2 6 4 43 ...
+ $ yrdline100                 : num [1:362447] 30 58 53 56 56 98 98 94 96 43 ...
+ $ ydstogo                    : num [1:362447] 0 10 5 8 8 10 10 6 8 10 ...
+ $ ydsnet                     : num [1:362447] 0 5 2 2 2 0 4 2 2 3 ...
+ $ GoalToGo                   : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ FirstDown                  : num [1:362447] NA 0 0 0 1 0 0 0 1 0 ...
+ $ posteam                    : chr [1:362447] "PIT" "PIT" "PIT" "PIT" ...
+ $ DefensiveTeam              : chr [1:362447] "TEN" "TEN" "TEN" "TEN" ...
+ $ desc                       : chr [1:362447] "R.Bironas kicks 67 yards from TEN 30 to PIT 3. S.Logan to PIT 42 for 39 yards (M.Griffin)." "(14:53) B.Roethlisberger pass short left to H.Ward to PIT 47 for 5 yards (C.Hope)." "(14:16) W.Parker right end to PIT 44 for -3 yards (S.Tulloch)." "(13:35) (Shotgun) B.Roethlisberger pass incomplete deep right to M.Wallace. COVERAGE BY #24 HOPE" ...
+ $ PlayAttempted              : num [1:362447] 1 1 1 1 1 1 1 1 1 1 ...
+ $ Yards.Gained               : num [1:362447] 39 5 -3 0 0 0 4 -2 11 3 ...
+ $ sp                         : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ Touchdown                  : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ ExPointResult              : chr [1:362447] NA NA NA NA ...
+ $ TwoPointConv               : chr [1:362447] NA NA NA NA ...
+ $ DefTwoPoint                : logi [1:362447] NA NA NA NA NA NA ...
+ $ Safety                     : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ Onsidekick                 : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ PuntResult                 : chr [1:362447] NA NA NA NA ...
+ $ PlayType                   : chr [1:362447] "Kickoff" "Pass" "Run" "Pass" ...
+ $ Passer                     : chr [1:362447] NA "B.Roethlisberger" NA "B.Roethlisberger" ...
+ $ Passer_ID                  : chr [1:362447] "None" "00-0022924" "None" "00-0022924" ...
+ $ PassAttempt                : num [1:362447] 0 1 0 1 0 0 1 0 0 1 ...
+ $ PassOutcome                : chr [1:362447] NA "Complete" NA "Incomplete Pass" ...
+ $ PassLength                 : chr [1:362447] NA "Short" NA "Deep" ...
+ $ AirYards                   : num [1:362447] 0 -3 0 34 0 0 3 0 0 -2 ...
+ $ YardsAfterCatch            : num [1:362447] 0 8 0 0 0 0 1 0 0 5 ...
+ $ QBHit                      : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ PassLocation               : chr [1:362447] NA "left" NA "right" ...
+ $ InterceptionThrown         : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ Interceptor                : chr [1:362447] NA NA NA NA ...
+ $ Rusher                     : chr [1:362447] NA NA "W.Parker" NA ...
+ $ Rusher_ID                  : chr [1:362447] "None" "None" "00-0022250" "None" ...
+ $ RushAttempt                : num [1:362447] 0 0 1 0 0 1 0 1 0 0 ...
+ $ RunLocation                : chr [1:362447] NA NA "right" NA ...
+ $ RunGap                     : chr [1:362447] NA NA "end" NA ...
+ $ Receiver                   : chr [1:362447] NA "H.Ward" NA "M.Wallace" ...
+ $ Receiver_ID                : chr [1:362447] "None" "00-0017162" "None" "00-0026901" ...
+ $ Reception                  : num [1:362447] 0 1 0 0 0 0 1 0 0 1 ...
+ $ ReturnResult               : chr [1:362447] NA NA NA NA ...
+ $ Returner                   : chr [1:362447] "S.Logan" NA NA NA ...
+ $ BlockingPlayer             : logi [1:362447] NA NA NA NA NA NA ...
+ $ Tackler1                   : chr [1:362447] "M.Griffin" "C.Hope" "S.Tulloch" NA ...
+ $ Tackler2                   : chr [1:362447] NA NA NA NA ...
+ $ FieldGoalResult            : chr [1:362447] NA NA NA NA ...
+ $ FieldGoalDistance          : num [1:362447] NA NA NA NA NA NA NA NA NA NA ...
+ $ Fumble                     : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ RecFumbTeam                : chr [1:362447] NA NA NA NA ...
+ $ RecFumbPlayer              : chr [1:362447] NA NA NA NA ...
+ $ Sack                       : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ Challenge.Replay           : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ ChalReplayResult           : chr [1:362447] NA NA NA NA ...
+ $ Accepted.Penalty           : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ PenalizedTeam              : chr [1:362447] NA NA NA NA ...
+ $ PenaltyType                : chr [1:362447] NA NA NA NA ...
+ $ PenalizedPlayer            : chr [1:362447] NA NA NA NA ...
+ $ Penalty.Yards              : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ PosTeamScore               : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ DefTeamScore               : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ ScoreDiff                  : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ AbsScoreDiff               : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ HomeTeam                   : chr [1:362447] "PIT" "PIT" "PIT" "PIT" ...
+ $ AwayTeam                   : chr [1:362447] "TEN" "TEN" "TEN" "TEN" ...
+ $ Timeout_Indicator          : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ Timeout_Team               : chr [1:362447] "None" "None" "None" "None" ...
+ $ posteam_timeouts_pre       : num [1:362447] 3 3 3 3 3 3 3 3 3 3 ...
+ $ HomeTimeouts_Remaining_Pre : num [1:362447] 3 3 3 3 3 3 3 3 3 3 ...
+ $ AwayTimeouts_Remaining_Pre : num [1:362447] 3 3 3 3 3 3 3 3 3 3 ...
+ $ HomeTimeouts_Remaining_Post: num [1:362447] 3 3 3 3 3 3 3 3 3 3 ...
+ $ AwayTimeouts_Remaining_Post: num [1:362447] 3 3 3 3 3 3 3 3 3 3 ...
+ $ No_Score_Prob              : num [1:362447] 0.001506 0.000969 0.001057 0.001434 0.001861 ...
+ $ Opp_Field_Goal_Prob        : num [1:362447] 0.18 0.109 0.105 0.149 0.213 ...
+ $ Opp_Safety_Prob            : num [1:362447] 0.006639 0.001061 0.000981 0.001944 0.003279 ...
+ $ Opp_Touchdown_Prob         : num [1:362447] 0.281 0.169 0.163 0.235 0.322 ...
+ $ Field_Goal_Prob            : num [1:362447] 0.214 0.294 0.305 0.289 0.245 ...
+ $ Safety_Prob                : num [1:362447] 0.00359 0.00364 0.00383 0.00478 0.0064 ...
+ $ Touchdown_Prob             : num [1:362447] 0.314 0.423 0.421 0.319 0.208 ...
+ $ ExPoint_Prob               : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ TwoPoint_Prob              : num [1:362447] 0 0 0 0 0 0 0 0 0 0 ...
+ $ ExpPts                     : num [1:362447] 0.324 2.338 2.416 1.013 -0.699 ...
+ $ EPA                        : num [1:362447] 2.0145 0.0779 -1.4028 -1.7126 2.0978 ...
+ $ airEPA                     : num [1:362447] NA -1.07 NA 3.32 NA ...
+ $ yacEPA                     : num [1:362447] NA 1.15 NA -5.03 NA ...
+ $ Home_WP_pre                : num [1:362447] 0.486 0.546 0.551 0.511 0.461 ...
+ $ Away_WP_pre                : num [1:362447] 0.514 0.454 0.449 0.489 0.539 ...
+ $ Home_WP_post               : num [1:362447] 0.546 0.551 0.511 0.461 0.559 ...
+ $ Away_WP_post               : num [1:362447] 0.454 0.449 0.489 0.539 0.441 ...
+ $ Win_Prob                   : num [1:362447] 0.486 0.546 0.551 0.511 0.461 ...
+ $ WPA                        : num [1:362447] 0.06076 0.00465 -0.04029 -0.04958 0.09771 ...
+  [list output truncated]
+ - attr(*, "spec")=
+  .. cols(
+  ..   Date = col_date(format = ""),
+  ..   GameID = col_double(),
+  ..   Drive = col_double(),
+  ..   qtr = col_double(),
+  ..   down = col_double(),
+  ..   time = col_time(format = ""),
+  ..   TimeUnder = col_double(),
+  ..   TimeSecs = col_double(),
+  ..   PlayTimeDiff = col_double(),
+  ..   SideofField = col_character(),
+  ..   yrdln = col_double(),
+  ..   yrdline100 = col_double(),
+  ..   ydstogo = col_double(),
+  ..   ydsnet = col_double(),
+  ..   GoalToGo = col_double(),
+  ..   FirstDown = col_double(),
+  ..   posteam = col_character(),
+  ..   DefensiveTeam = col_character(),
+  ..   desc = col_character(),
+  ..   PlayAttempted = col_double(),
+  ..   Yards.Gained = col_double(),
+  ..   sp = col_double(),
+  ..   Touchdown = col_double(),
+  ..   ExPointResult = col_character(),
+  ..   TwoPointConv = col_character(),
+  ..   DefTwoPoint = col_logical(),
+  ..   Safety = col_double(),
+  ..   Onsidekick = col_double(),
+  ..   PuntResult = col_character(),
+  ..   PlayType = col_character(),
+  ..   Passer = col_character(),
+  ..   Passer_ID = col_character(),
+  ..   PassAttempt = col_double(),
+  ..   PassOutcome = col_character(),
+  ..   PassLength = col_character(),
+  ..   AirYards = col_double(),
+  ..   YardsAfterCatch = col_double(),
+  ..   QBHit = col_double(),
+  ..   PassLocation = col_character(),
+  ..   InterceptionThrown = col_double(),
+  ..   Interceptor = col_character(),
+  ..   Rusher = col_character(),
+  ..   Rusher_ID = col_character(),
+  ..   RushAttempt = col_double(),
+  ..   RunLocation = col_character(),
+  ..   RunGap = col_character(),
+  ..   Receiver = col_character(),
+  ..   Receiver_ID = col_character(),
+  ..   Reception = col_double(),
+  ..   ReturnResult = col_character(),
+  ..   Returner = col_character(),
+  ..   BlockingPlayer = col_logical(),
+  ..   Tackler1 = col_character(),
+  ..   Tackler2 = col_character(),
+  ..   FieldGoalResult = col_character(),
+  ..   FieldGoalDistance = col_double(),
+  ..   Fumble = col_double(),
+  ..   RecFumbTeam = col_character(),
+  ..   RecFumbPlayer = col_character(),
+  ..   Sack = col_double(),
+  ..   Challenge.Replay = col_double(),
+  ..   ChalReplayResult = col_character(),
+  ..   Accepted.Penalty = col_double(),
+  ..   PenalizedTeam = col_character(),
+  ..   PenaltyType = col_character(),
+  ..   PenalizedPlayer = col_character(),
+  ..   Penalty.Yards = col_double(),
+  ..   PosTeamScore = col_double(),
+  ..   DefTeamScore = col_double(),
+  ..   ScoreDiff = col_double(),
+  ..   AbsScoreDiff = col_double(),
+  ..   HomeTeam = col_character(),
+  ..   AwayTeam = col_character(),
+  ..   Timeout_Indicator = col_double(),
+  ..   Timeout_Team = col_character(),
+  ..   posteam_timeouts_pre = col_double(),
+  ..   HomeTimeouts_Remaining_Pre = col_double(),
+  ..   AwayTimeouts_Remaining_Pre = col_double(),
+  ..   HomeTimeouts_Remaining_Post = col_double(),
+  ..   AwayTimeouts_Remaining_Post = col_double(),
+  ..   No_Score_Prob = col_double(),
+  ..   Opp_Field_Goal_Prob = col_double(),
+  ..   Opp_Safety_Prob = col_double(),
+  ..   Opp_Touchdown_Prob = col_double(),
+  ..   Field_Goal_Prob = col_double(),
+  ..   Safety_Prob = col_double(),
+  ..   Touchdown_Prob = col_double(),
+  ..   ExPoint_Prob = col_double(),
+  ..   TwoPoint_Prob = col_double(),
+  ..   ExpPts = col_double(),
+  ..   EPA = col_double(),
+  ..   airEPA = col_double(),
+  ..   yacEPA = col_double(),
+  ..   Home_WP_pre = col_double(),
+  ..   Away_WP_pre = col_double(),
+  ..   Home_WP_post = col_double(),
+  ..   Away_WP_post = col_double(),
+  ..   Win_Prob = col_double(),
+  ..   WPA = col_double(),
+  ..   airWPA = col_double(),
+  ..   yacWPA = col_double(),
+  ..   Season = col_double()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pan_play_data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(posteam <span class="sc">==</span> <span class="st">"CAR"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(pan_play_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10548   102</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pan_rp_play_data <span class="ot">&lt;-</span> pan_play_data <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PlayType <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Run"</span>, <span class="st">"Pass"</span>))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(pan_rp_play_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7749  102</code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
