@@ -7,6 +7,8 @@ format: html
 library(tidyr)
 library(readr)
 library(dplyr)
+library(gt)
+library(ggplot2)
 ```
 
 
@@ -14,18 +16,21 @@ library(dplyr)
 
 
 ```{r}
-data <- read_csv("data/NFL_play_data.csv")
+nfl_data <- read_csv("data/NFL_play_data.csv") |>
+  rename(yards_gained = Yards.Gained)
 ```
 ```{r}
-dim(data)
-str(data, max_level=1)
+dim(nfl_data)
+str(nfl_data, max_level=1)
 ```
 
 ```{r}
-pan_play_data <- data |>
+pan_play_data <- nfl_data |>
   filter(posteam == "CAR")
 
 dim(pan_play_data)
+
+unique(nfl_data$posteam)
 ```
 
 
@@ -34,4 +39,20 @@ pan_rp_play_data <- pan_play_data |>
   filter(PlayType %in% c("Run", "Pass"))
 
 dim(pan_rp_play_data)
+
+table(pan_rp_play_data$PlayType)
 ```
+
+
+```{r}
+nfc_south_data <- nfl_data |>
+  filter(PlayType %in% c("Run", "Pass"),
+         posteam %in% c("CAR", "NO", "TB", "ATL")) |>
+  select(posteam, PlayType, yards_gained)
+```
+
+
+```{r}
+head(nfc_south_data)
+```
+
