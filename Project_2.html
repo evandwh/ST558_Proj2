@@ -171,35 +171,27 @@ Attaching package: 'bslib'</code></pre>
 
     page</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggridges' was built under R version 4.4.3</code></pre>
+</div>
 </div>
 <section id="data-exploration" class="level1">
 <h1>Data Exploration</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>nfl_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/NFL_play_data.csv"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">yards_gained =</span> Yards.Gained) <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Need to change the name of a couple of teams to make sure that there are only 32 teams listed.</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">posteam =</span> <span class="fu">recode</span>(</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>      posteam,</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">"STL"</span> <span class="ot">=</span> <span class="st">"LA"</span>,</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"JAC"</span> <span class="ot">=</span> <span class="st">"JAX"</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">DefensiveTeam =</span> <span class="fu">recode</span>(</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>      DefensiveTeam,</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>      <span class="st">"STL"</span> <span class="ot">=</span> <span class="st">"LA"</span>,</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>      <span class="st">"JAC"</span> <span class="ot">=</span> <span class="st">"JAX"</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">HomeTeam =</span> <span class="fu">recode</span>(</span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>      HomeTeam,</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>      <span class="st">"STL"</span> <span class="ot">=</span> <span class="st">"LA"</span>,</span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>      <span class="st">"JAC"</span> <span class="ot">=</span> <span class="st">"JAX"</span></span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">AwayTeam =</span> <span class="fu">recode</span>(</span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>      AwayTeam,</span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>      <span class="st">"STL"</span> <span class="ot">=</span> <span class="st">"LA"</span>,</span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>      <span class="st">"JAC"</span> <span class="ot">=</span> <span class="st">"JAX"</span></span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>nfl_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/NFL_play_data.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">yards_gained =</span> Yards.Gained) <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Need to change the name of a couple of teams to make sure that there are only 32 teams listed.</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(posteam, DefensiveTeam, HomeTeam, AwayTeam),</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">recode</span>(</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        .x,</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"STL"</span> <span class="ot">=</span> <span class="st">"LA"</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"JAC"</span> <span class="ot">=</span> <span class="st">"JAX"</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: One or more parsing issues, call `problems()` on your data frame for details,
 e.g.:
@@ -221,11 +213,11 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nfl_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nfl_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 362447    102</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(nfl_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(nfl_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] "Date"                        "GameID"                     
   [3] "Drive"                       "qtr"                        
@@ -281,7 +273,7 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(nfl_data<span class="sc">$</span>PlayType)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(nfl_data<span class="sc">$</span>PlayType)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "Kickoff"            "Pass"               "Run"               
  [4] "Punt"               "Sack"               "Field Goal"        
@@ -289,7 +281,7 @@ time  (1): time
 [10] "Timeout"            "Extra Point"        "QB Kneel"          
 [13] "End of Game"        "Spike"              "Half End"          </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nfl_data<span class="sc">$</span>PlayType)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nfl_data<span class="sc">$</span>PlayType)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
        End of Game        Extra Point         Field Goal           Half End 
@@ -303,41 +295,42 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>play_type_table <span class="ot">&lt;-</span> nfl_data <span class="sc">|&gt;</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(PlayType) <span class="sc">|&gt;</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Frequency of Play Types"</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">PlayType =</span> <span class="st">"Play Type"</span>,</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="st">"Count"</span></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>),</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="fu">everything</span>())</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_row_striping</span>()</span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>play_type_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>CAR2015_play_type_table <span class="ot">&lt;-</span> nfl_data <span class="sc">|&gt;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(posteam <span class="sc">==</span> <span class="st">"CAR"</span>, Season <span class="sc">==</span> <span class="st">"2015"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(PlayType) <span class="sc">|&gt;</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Frequency of Play Types"</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">PlayType =</span> <span class="st">"Play Type"</span>,</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="st">"Count"</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>),</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="fu">everything</span>())</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_row_striping</span>()</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>CAR2015_play_type_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="tedhojdxbh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#tedhojdxbh table {
+<div id="uyroxmavhl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#uyroxmavhl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#tedhojdxbh thead, #tedhojdxbh tbody, #tedhojdxbh tfoot, #tedhojdxbh tr, #tedhojdxbh td, #tedhojdxbh th {
+#uyroxmavhl thead, #uyroxmavhl tbody, #uyroxmavhl tfoot, #uyroxmavhl tr, #uyroxmavhl td, #uyroxmavhl th {
   border-style: none;
 }
 
-#tedhojdxbh p {
+#uyroxmavhl p {
   margin: 0;
   padding: 0;
 }
 
-#tedhojdxbh .gt_table {
+#uyroxmavhl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -363,12 +356,12 @@ time  (1): time
   border-left-color: #D3D3D3;
 }
 
-#tedhojdxbh .gt_caption {
+#uyroxmavhl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#tedhojdxbh .gt_title {
+#uyroxmavhl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -380,7 +373,7 @@ time  (1): time
   border-bottom-width: 0;
 }
 
-#tedhojdxbh .gt_subtitle {
+#uyroxmavhl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -392,7 +385,7 @@ time  (1): time
   border-top-width: 0;
 }
 
-#tedhojdxbh .gt_heading {
+#uyroxmavhl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -404,13 +397,13 @@ time  (1): time
   border-right-color: #D3D3D3;
 }
 
-#tedhojdxbh .gt_bottom_border {
+#uyroxmavhl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#tedhojdxbh .gt_col_headings {
+#uyroxmavhl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -425,7 +418,7 @@ time  (1): time
   border-right-color: #D3D3D3;
 }
 
-#tedhojdxbh .gt_col_heading {
+#uyroxmavhl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -445,7 +438,7 @@ time  (1): time
   overflow-x: hidden;
 }
 
-#tedhojdxbh .gt_column_spanner_outer {
+#uyroxmavhl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -457,15 +450,15 @@ time  (1): time
   padding-right: 4px;
 }
 
-#tedhojdxbh .gt_column_spanner_outer:first-child {
+#uyroxmavhl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#tedhojdxbh .gt_column_spanner_outer:last-child {
+#uyroxmavhl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#tedhojdxbh .gt_column_spanner {
+#uyroxmavhl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -477,11 +470,11 @@ time  (1): time
   width: 100%;
 }
 
-#tedhojdxbh .gt_spanner_row {
+#uyroxmavhl .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#tedhojdxbh .gt_group_heading {
+#uyroxmavhl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -507,7 +500,7 @@ time  (1): time
   text-align: left;
 }
 
-#tedhojdxbh .gt_empty_group_heading {
+#uyroxmavhl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -522,15 +515,15 @@ time  (1): time
   vertical-align: middle;
 }
 
-#tedhojdxbh .gt_from_md > :first-child {
+#uyroxmavhl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#tedhojdxbh .gt_from_md > :last-child {
+#uyroxmavhl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#tedhojdxbh .gt_row {
+#uyroxmavhl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -549,7 +542,7 @@ time  (1): time
   overflow-x: hidden;
 }
 
-#tedhojdxbh .gt_stub {
+#uyroxmavhl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -562,7 +555,7 @@ time  (1): time
   padding-right: 5px;
 }
 
-#tedhojdxbh .gt_stub_row_group {
+#uyroxmavhl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -576,15 +569,15 @@ time  (1): time
   vertical-align: top;
 }
 
-#tedhojdxbh .gt_row_group_first td {
+#uyroxmavhl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#tedhojdxbh .gt_row_group_first th {
+#uyroxmavhl .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#tedhojdxbh .gt_summary_row {
+#uyroxmavhl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -594,16 +587,16 @@ time  (1): time
   padding-right: 5px;
 }
 
-#tedhojdxbh .gt_first_summary_row {
+#uyroxmavhl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#tedhojdxbh .gt_first_summary_row.thick {
+#uyroxmavhl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#tedhojdxbh .gt_last_summary_row {
+#uyroxmavhl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -613,7 +606,7 @@ time  (1): time
   border-bottom-color: #D3D3D3;
 }
 
-#tedhojdxbh .gt_grand_summary_row {
+#uyroxmavhl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -623,7 +616,7 @@ time  (1): time
   padding-right: 5px;
 }
 
-#tedhojdxbh .gt_first_grand_summary_row {
+#uyroxmavhl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -633,7 +626,7 @@ time  (1): time
   border-top-color: #D3D3D3;
 }
 
-#tedhojdxbh .gt_last_grand_summary_row_top {
+#uyroxmavhl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -643,11 +636,11 @@ time  (1): time
   border-bottom-color: #D3D3D3;
 }
 
-#tedhojdxbh .gt_striped {
+#uyroxmavhl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#tedhojdxbh .gt_table_body {
+#uyroxmavhl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -656,7 +649,7 @@ time  (1): time
   border-bottom-color: #D3D3D3;
 }
 
-#tedhojdxbh .gt_footnotes {
+#uyroxmavhl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -670,7 +663,7 @@ time  (1): time
   border-right-color: #D3D3D3;
 }
 
-#tedhojdxbh .gt_footnote {
+#uyroxmavhl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -679,7 +672,7 @@ time  (1): time
   padding-right: 5px;
 }
 
-#tedhojdxbh .gt_sourcenotes {
+#uyroxmavhl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -693,7 +686,7 @@ time  (1): time
   border-right-color: #D3D3D3;
 }
 
-#tedhojdxbh .gt_sourcenote {
+#uyroxmavhl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -701,72 +694,72 @@ time  (1): time
   padding-right: 5px;
 }
 
-#tedhojdxbh .gt_left {
+#uyroxmavhl .gt_left {
   text-align: left;
 }
 
-#tedhojdxbh .gt_center {
+#uyroxmavhl .gt_center {
   text-align: center;
 }
 
-#tedhojdxbh .gt_right {
+#uyroxmavhl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#tedhojdxbh .gt_font_normal {
+#uyroxmavhl .gt_font_normal {
   font-weight: normal;
 }
 
-#tedhojdxbh .gt_font_bold {
+#uyroxmavhl .gt_font_bold {
   font-weight: bold;
 }
 
-#tedhojdxbh .gt_font_italic {
+#uyroxmavhl .gt_font_italic {
   font-style: italic;
 }
 
-#tedhojdxbh .gt_super {
+#uyroxmavhl .gt_super {
   font-size: 65%;
 }
 
-#tedhojdxbh .gt_footnote_marks {
+#uyroxmavhl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#tedhojdxbh .gt_asterisk {
+#uyroxmavhl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#tedhojdxbh .gt_indent_1 {
+#uyroxmavhl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#tedhojdxbh .gt_indent_2 {
+#uyroxmavhl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#tedhojdxbh .gt_indent_3 {
+#uyroxmavhl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#tedhojdxbh .gt_indent_4 {
+#uyroxmavhl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#tedhojdxbh .gt_indent_5 {
+#uyroxmavhl .gt_indent_5 {
   text-indent: 25px;
 }
 
-#tedhojdxbh .katex-display {
+#uyroxmavhl .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#tedhojdxbh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#uyroxmavhl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -784,63 +777,47 @@ time  (1): time
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="PlayType">End of Game</td>
-<td class="gt_row gt_right" headers="n">1759</td>
+<td class="gt_row gt_right" headers="n">8</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="PlayType">Extra Point</td>
-<td class="gt_row gt_right gt_striped" headers="n">9008</td>
+<td class="gt_row gt_right gt_striped" headers="n">55</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="PlayType">Field Goal</td>
-<td class="gt_row gt_right" headers="n">7902</td>
+<td class="gt_row gt_right" headers="n">36</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" headers="PlayType">Half End</td>
-<td class="gt_row gt_right gt_striped" headers="n">33</td>
+<td class="gt_row gt_left gt_striped" headers="PlayType">Kickoff</td>
+<td class="gt_row gt_right gt_striped" headers="n">70</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="PlayType">Kickoff</td>
-<td class="gt_row gt_right" headers="n">20846</td>
+<td class="gt_row gt_left" headers="PlayType">No Play</td>
+<td class="gt_row gt_right" headers="n">76</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" headers="PlayType">No Play</td>
-<td class="gt_row gt_right gt_striped" headers="n">18996</td>
+<td class="gt_row gt_left gt_striped" headers="PlayType">Pass</td>
+<td class="gt_row gt_right gt_striped" headers="n">500</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="PlayType">Pass</td>
-<td class="gt_row gt_right" headers="n">141866</td>
+<td class="gt_row gt_left" headers="PlayType">Punt</td>
+<td class="gt_row gt_right" headers="n">70</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" headers="PlayType">Punt</td>
-<td class="gt_row gt_right gt_striped" headers="n">19557</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="PlayType">QB Kneel</td>
-<td class="gt_row gt_right" headers="n">3133</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="PlayType">Quarter End</td>
-<td class="gt_row gt_right gt_striped" headers="n">4217</td>
+<td class="gt_row gt_left gt_striped" headers="PlayType">QB Kneel</td>
+<td class="gt_row gt_right gt_striped" headers="n">17</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="PlayType">Run</td>
-<td class="gt_row gt_right" headers="n">107448</td>
+<td class="gt_row gt_right" headers="n">509</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="PlayType">Sack</td>
-<td class="gt_row gt_right gt_striped" headers="n">9448</td>
+<td class="gt_row gt_right gt_striped" headers="n">33</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="PlayType">Spike</td>
-<td class="gt_row gt_right" headers="n">584</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="PlayType">Timeout</td>
-<td class="gt_row gt_right gt_striped" headers="n">14393</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="PlayType">Two Minute Warning</td>
-<td class="gt_row gt_right" headers="n">3257</td>
+<td class="gt_row gt_right" headers="n">2</td>
 </tr>
 </tbody>
 </table>
@@ -849,79 +826,81 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>nfl_play_down_data <span class="ot">&lt;-</span> nfl_data <span class="sc">|&gt;</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>PlayType <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"End of Game"</span>, </span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Extra Point"</span>, </span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Half End"</span>, </span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Kickoff"</span>, </span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Quarter End"</span>,</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Two Minute Warning"</span>,</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Timeout"</span>,</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"No Play"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>CAR2015_play_down_data <span class="ot">&lt;-</span> nfl_data <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>PlayType <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"End of Game"</span>, </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Extra Point"</span>, </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Half End"</span>, </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Kickoff"</span>, </span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Quarter End"</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Two Minute Warning"</span>,</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Timeout"</span>,</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"No Play"</span>),</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>         posteam <span class="sc">==</span> <span class="st">"CAR"</span>,</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>         Season <span class="sc">==</span> <span class="st">"2015"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>play_table <span class="ot">&lt;-</span> nfl_play_down_data <span class="sc">|&gt;</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(PlayType, down) <span class="sc">|&gt;</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> down,</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> n,</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>play_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>CAR2015_play_table <span class="ot">&lt;-</span> CAR2015_play_down_data <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(PlayType, down) <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> down,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> n,</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>CAR2015_play_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 6
-  PlayType     `1`   `2`   `3`   `4`  `NA`
-  &lt;chr&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-1 Field Goal   226   214   196  7265     1
-2 Pass       52984 46993 39279  2239   371
-3 Punt           1     0     5 19551     0
-4 QB Kneel    1841   824   445    22     1
-5 Run        58207 36349 11288  1424   180
-6 Sack        2882  2691  3706   164     5
-7 Spike        476    76    32     0     0</code></pre>
+<pre><code># A tibble: 7 × 5
+  PlayType     `1`   `2`   `3`   `4`
+  &lt;chr&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+1 Field Goal     1     1     1    33
+2 Pass         201   166   130     3
+3 Punt           0     0     0    70
+4 QB Kneel      13     4     0     0
+5 Run          267   174    60     8
+6 Sack          10    10    13     0
+7 Spike          2     0     0     0</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>WPA_sum_table <span class="ot">&lt;-</span> nfl_play_down_data <span class="sc">|&gt;</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PlayType) <span class="sc">|&gt;</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean =</span> <span class="fu">mean</span>(WPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Median =</span> <span class="fu">median</span>(WPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">sd</span>(WPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Minimum =</span> <span class="fu">min</span>(WPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Maximum =</span> <span class="fu">max</span>(WPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Count =</span> <span class="fu">n</span>(),</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(</span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">c</span>(Mean, Median, SD, Minimum, Maximum),</span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">decimals =</span> <span class="dv">4</span></span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
-<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"WPA Summary by Play Type"</span></span>
-<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>WPA_sum_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>WPA_sum_table <span class="ot">&lt;-</span> CAR2015_play_down_data <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PlayType) <span class="sc">|&gt;</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean =</span> <span class="fu">mean</span>(WPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Median =</span> <span class="fu">median</span>(WPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">sd</span>(WPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Minimum =</span> <span class="fu">min</span>(WPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Maximum =</span> <span class="fu">max</span>(WPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Count =</span> <span class="fu">n</span>(),</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">c</span>(Mean, Median, SD, Minimum, Maximum),</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">decimals =</span> <span class="dv">4</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"WPA Summary by Play Type"</span></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>WPA_sum_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="qklgislqjy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qklgislqjy table {
+<div id="pdxykmqism" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pdxykmqism table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qklgislqjy thead, #qklgislqjy tbody, #qklgislqjy tfoot, #qklgislqjy tr, #qklgislqjy td, #qklgislqjy th {
+#pdxykmqism thead, #pdxykmqism tbody, #pdxykmqism tfoot, #pdxykmqism tr, #pdxykmqism td, #pdxykmqism th {
   border-style: none;
 }
 
-#qklgislqjy p {
+#pdxykmqism p {
   margin: 0;
   padding: 0;
 }
 
-#qklgislqjy .gt_table {
+#pdxykmqism .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -947,12 +926,12 @@ time  (1): time
   border-left-color: #D3D3D3;
 }
 
-#qklgislqjy .gt_caption {
+#pdxykmqism .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qklgislqjy .gt_title {
+#pdxykmqism .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -964,7 +943,7 @@ time  (1): time
   border-bottom-width: 0;
 }
 
-#qklgislqjy .gt_subtitle {
+#pdxykmqism .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -976,7 +955,7 @@ time  (1): time
   border-top-width: 0;
 }
 
-#qklgislqjy .gt_heading {
+#pdxykmqism .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -988,13 +967,13 @@ time  (1): time
   border-right-color: #D3D3D3;
 }
 
-#qklgislqjy .gt_bottom_border {
+#pdxykmqism .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qklgislqjy .gt_col_headings {
+#pdxykmqism .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1009,7 +988,7 @@ time  (1): time
   border-right-color: #D3D3D3;
 }
 
-#qklgislqjy .gt_col_heading {
+#pdxykmqism .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1029,7 +1008,7 @@ time  (1): time
   overflow-x: hidden;
 }
 
-#qklgislqjy .gt_column_spanner_outer {
+#pdxykmqism .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1041,15 +1020,15 @@ time  (1): time
   padding-right: 4px;
 }
 
-#qklgislqjy .gt_column_spanner_outer:first-child {
+#pdxykmqism .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qklgislqjy .gt_column_spanner_outer:last-child {
+#pdxykmqism .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qklgislqjy .gt_column_spanner {
+#pdxykmqism .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1061,11 +1040,11 @@ time  (1): time
   width: 100%;
 }
 
-#qklgislqjy .gt_spanner_row {
+#pdxykmqism .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qklgislqjy .gt_group_heading {
+#pdxykmqism .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1091,7 +1070,7 @@ time  (1): time
   text-align: left;
 }
 
-#qklgislqjy .gt_empty_group_heading {
+#pdxykmqism .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1106,15 +1085,15 @@ time  (1): time
   vertical-align: middle;
 }
 
-#qklgislqjy .gt_from_md > :first-child {
+#pdxykmqism .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qklgislqjy .gt_from_md > :last-child {
+#pdxykmqism .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qklgislqjy .gt_row {
+#pdxykmqism .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1133,7 +1112,7 @@ time  (1): time
   overflow-x: hidden;
 }
 
-#qklgislqjy .gt_stub {
+#pdxykmqism .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1146,7 +1125,7 @@ time  (1): time
   padding-right: 5px;
 }
 
-#qklgislqjy .gt_stub_row_group {
+#pdxykmqism .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1160,15 +1139,15 @@ time  (1): time
   vertical-align: top;
 }
 
-#qklgislqjy .gt_row_group_first td {
+#pdxykmqism .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qklgislqjy .gt_row_group_first th {
+#pdxykmqism .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qklgislqjy .gt_summary_row {
+#pdxykmqism .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1178,16 +1157,16 @@ time  (1): time
   padding-right: 5px;
 }
 
-#qklgislqjy .gt_first_summary_row {
+#pdxykmqism .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qklgislqjy .gt_first_summary_row.thick {
+#pdxykmqism .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qklgislqjy .gt_last_summary_row {
+#pdxykmqism .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1197,7 +1176,7 @@ time  (1): time
   border-bottom-color: #D3D3D3;
 }
 
-#qklgislqjy .gt_grand_summary_row {
+#pdxykmqism .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1207,7 +1186,7 @@ time  (1): time
   padding-right: 5px;
 }
 
-#qklgislqjy .gt_first_grand_summary_row {
+#pdxykmqism .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1217,7 +1196,7 @@ time  (1): time
   border-top-color: #D3D3D3;
 }
 
-#qklgislqjy .gt_last_grand_summary_row_top {
+#pdxykmqism .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1227,11 +1206,11 @@ time  (1): time
   border-bottom-color: #D3D3D3;
 }
 
-#qklgislqjy .gt_striped {
+#pdxykmqism .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qklgislqjy .gt_table_body {
+#pdxykmqism .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1240,7 +1219,7 @@ time  (1): time
   border-bottom-color: #D3D3D3;
 }
 
-#qklgislqjy .gt_footnotes {
+#pdxykmqism .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1254,7 +1233,7 @@ time  (1): time
   border-right-color: #D3D3D3;
 }
 
-#qklgislqjy .gt_footnote {
+#pdxykmqism .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1263,7 +1242,7 @@ time  (1): time
   padding-right: 5px;
 }
 
-#qklgislqjy .gt_sourcenotes {
+#pdxykmqism .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1277,7 +1256,7 @@ time  (1): time
   border-right-color: #D3D3D3;
 }
 
-#qklgislqjy .gt_sourcenote {
+#pdxykmqism .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1285,72 +1264,72 @@ time  (1): time
   padding-right: 5px;
 }
 
-#qklgislqjy .gt_left {
+#pdxykmqism .gt_left {
   text-align: left;
 }
 
-#qklgislqjy .gt_center {
+#pdxykmqism .gt_center {
   text-align: center;
 }
 
-#qklgislqjy .gt_right {
+#pdxykmqism .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qklgislqjy .gt_font_normal {
+#pdxykmqism .gt_font_normal {
   font-weight: normal;
 }
 
-#qklgislqjy .gt_font_bold {
+#pdxykmqism .gt_font_bold {
   font-weight: bold;
 }
 
-#qklgislqjy .gt_font_italic {
+#pdxykmqism .gt_font_italic {
   font-style: italic;
 }
 
-#qklgislqjy .gt_super {
+#pdxykmqism .gt_super {
   font-size: 65%;
 }
 
-#qklgislqjy .gt_footnote_marks {
+#pdxykmqism .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qklgislqjy .gt_asterisk {
+#pdxykmqism .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qklgislqjy .gt_indent_1 {
+#pdxykmqism .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qklgislqjy .gt_indent_2 {
+#pdxykmqism .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qklgislqjy .gt_indent_3 {
+#pdxykmqism .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qklgislqjy .gt_indent_4 {
+#pdxykmqism .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qklgislqjy .gt_indent_5 {
+#pdxykmqism .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qklgislqjy .katex-display {
+#pdxykmqism .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qklgislqjy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#pdxykmqism div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1373,66 +1352,66 @@ time  (1): time
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="PlayType">Field Goal</td>
-<td class="gt_row gt_right" headers="Mean">0.0024</td>
-<td class="gt_row gt_right" headers="Median">0.0075</td>
-<td class="gt_row gt_right" headers="SD">0.0645</td>
-<td class="gt_row gt_right" headers="Minimum">−0.8449</td>
-<td class="gt_row gt_right" headers="Maximum">0.8966</td>
-<td class="gt_row gt_right" headers="Count">7902</td>
+<td class="gt_row gt_right" headers="Mean">0.0058</td>
+<td class="gt_row gt_right" headers="Median">0.0032</td>
+<td class="gt_row gt_right" headers="SD">0.0395</td>
+<td class="gt_row gt_right" headers="Minimum">−0.0960</td>
+<td class="gt_row gt_right" headers="Maximum">0.0663</td>
+<td class="gt_row gt_right" headers="Count">36</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="PlayType">Pass</td>
-<td class="gt_row gt_right" headers="Mean">0.0048</td>
-<td class="gt_row gt_right" headers="Median">−0.0013</td>
-<td class="gt_row gt_right" headers="SD">0.0519</td>
-<td class="gt_row gt_right" headers="Minimum">−0.9336</td>
-<td class="gt_row gt_right" headers="Maximum">0.9948</td>
-<td class="gt_row gt_right" headers="Count">141866</td>
+<td class="gt_row gt_right" headers="Mean">0.0079</td>
+<td class="gt_row gt_right" headers="Median">0.0000</td>
+<td class="gt_row gt_right" headers="SD">0.0530</td>
+<td class="gt_row gt_right" headers="Minimum">−0.1976</td>
+<td class="gt_row gt_right" headers="Maximum">0.5832</td>
+<td class="gt_row gt_right" headers="Count">500</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="PlayType">Punt</td>
-<td class="gt_row gt_right" headers="Mean">0.0200</td>
-<td class="gt_row gt_right" headers="Median">0.0160</td>
-<td class="gt_row gt_right" headers="SD">0.0462</td>
-<td class="gt_row gt_right" headers="Minimum">−0.6945</td>
-<td class="gt_row gt_right" headers="Maximum">0.6432</td>
-<td class="gt_row gt_right" headers="Count">19557</td>
+<td class="gt_row gt_right" headers="Mean">0.0192</td>
+<td class="gt_row gt_right" headers="Median">0.0161</td>
+<td class="gt_row gt_right" headers="SD">0.0436</td>
+<td class="gt_row gt_right" headers="Minimum">−0.0929</td>
+<td class="gt_row gt_right" headers="Maximum">0.1246</td>
+<td class="gt_row gt_right" headers="Count">70</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="PlayType">QB Kneel</td>
-<td class="gt_row gt_right" headers="Mean">0.0220</td>
-<td class="gt_row gt_right" headers="Median">0.0051</td>
-<td class="gt_row gt_right" headers="SD">0.0789</td>
-<td class="gt_row gt_right" headers="Minimum">−0.3874</td>
-<td class="gt_row gt_right" headers="Maximum">0.9937</td>
-<td class="gt_row gt_right" headers="Count">3133</td>
+<td class="gt_row gt_right" headers="Mean">0.0107</td>
+<td class="gt_row gt_right" headers="Median">0.0029</td>
+<td class="gt_row gt_right" headers="SD">0.0201</td>
+<td class="gt_row gt_right" headers="Minimum">−0.0026</td>
+<td class="gt_row gt_right" headers="Maximum">0.0682</td>
+<td class="gt_row gt_right" headers="Count">17</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="PlayType">Run</td>
-<td class="gt_row gt_right" headers="Mean">−0.0004</td>
-<td class="gt_row gt_right" headers="Median">−0.0023</td>
-<td class="gt_row gt_right" headers="SD">0.0321</td>
-<td class="gt_row gt_right" headers="Minimum">−0.9423</td>
-<td class="gt_row gt_right" headers="Maximum">0.5621</td>
-<td class="gt_row gt_right" headers="Count">107448</td>
+<td class="gt_row gt_right" headers="Mean">0.0041</td>
+<td class="gt_row gt_right" headers="Median">0.0000</td>
+<td class="gt_row gt_right" headers="SD">0.0281</td>
+<td class="gt_row gt_right" headers="Minimum">−0.1704</td>
+<td class="gt_row gt_right" headers="Maximum">0.1250</td>
+<td class="gt_row gt_right" headers="Count">509</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="PlayType">Sack</td>
-<td class="gt_row gt_right" headers="Mean">−0.0434</td>
-<td class="gt_row gt_right" headers="Median">−0.0380</td>
-<td class="gt_row gt_right" headers="SD">0.0401</td>
-<td class="gt_row gt_right" headers="Minimum">−0.9296</td>
-<td class="gt_row gt_right" headers="Maximum">0.1330</td>
-<td class="gt_row gt_right" headers="Count">9448</td>
+<td class="gt_row gt_right" headers="Mean">−0.0483</td>
+<td class="gt_row gt_right" headers="Median">−0.0523</td>
+<td class="gt_row gt_right" headers="SD">0.0272</td>
+<td class="gt_row gt_right" headers="Minimum">−0.1157</td>
+<td class="gt_row gt_right" headers="Maximum">−0.0001</td>
+<td class="gt_row gt_right" headers="Count">33</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="PlayType">Spike</td>
-<td class="gt_row gt_right" headers="Mean">−0.0187</td>
-<td class="gt_row gt_right" headers="Median">−0.0083</td>
-<td class="gt_row gt_right" headers="SD">0.0554</td>
-<td class="gt_row gt_right" headers="Minimum">−0.5140</td>
-<td class="gt_row gt_right" headers="Maximum">0.2836</td>
-<td class="gt_row gt_right" headers="Count">584</td>
+<td class="gt_row gt_right" headers="Mean">−0.0295</td>
+<td class="gt_row gt_right" headers="Median">−0.0295</td>
+<td class="gt_row gt_right" headers="SD">0.0448</td>
+<td class="gt_row gt_right" headers="Minimum">−0.0612</td>
+<td class="gt_row gt_right" headers="Maximum">0.0022</td>
+<td class="gt_row gt_right" headers="Count">2</td>
 </tr>
 </tbody>
 </table>
@@ -1441,45 +1420,45 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>EPA_sum_table <span class="ot">&lt;-</span> nfl_play_down_data <span class="sc">|&gt;</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PlayType) <span class="sc">|&gt;</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean =</span> <span class="fu">mean</span>(EPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Median =</span> <span class="fu">median</span>(EPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">sd</span>(EPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Minimum =</span> <span class="fu">min</span>(EPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Maximum =</span> <span class="fu">max</span>(EPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Count =</span> <span class="fu">n</span>(),</span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(</span>
-<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">c</span>(Mean, Median, SD, Minimum, Maximum),</span>
-<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">decimals =</span> <span class="dv">4</span></span>
-<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
-<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"EPA Summary by Play Type"</span></span>
-<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>EPA_sum_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>EPA_sum_table <span class="ot">&lt;-</span> CAR2015_play_down_data <span class="sc">|&gt;</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PlayType) <span class="sc">|&gt;</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean =</span> <span class="fu">mean</span>(EPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Median =</span> <span class="fu">median</span>(EPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">sd</span>(EPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Minimum =</span> <span class="fu">min</span>(EPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Maximum =</span> <span class="fu">max</span>(EPA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Count =</span> <span class="fu">n</span>(),</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">c</span>(Mean, Median, SD, Minimum, Maximum),</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">decimals =</span> <span class="dv">4</span></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"EPA Summary by Play Type"</span></span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>EPA_sum_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="qxvoowfjmu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qxvoowfjmu table {
+<div id="teijaxzbmf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#teijaxzbmf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qxvoowfjmu thead, #qxvoowfjmu tbody, #qxvoowfjmu tfoot, #qxvoowfjmu tr, #qxvoowfjmu td, #qxvoowfjmu th {
+#teijaxzbmf thead, #teijaxzbmf tbody, #teijaxzbmf tfoot, #teijaxzbmf tr, #teijaxzbmf td, #teijaxzbmf th {
   border-style: none;
 }
 
-#qxvoowfjmu p {
+#teijaxzbmf p {
   margin: 0;
   padding: 0;
 }
 
-#qxvoowfjmu .gt_table {
+#teijaxzbmf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1505,12 +1484,12 @@ time  (1): time
   border-left-color: #D3D3D3;
 }
 
-#qxvoowfjmu .gt_caption {
+#teijaxzbmf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qxvoowfjmu .gt_title {
+#teijaxzbmf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1522,7 +1501,7 @@ time  (1): time
   border-bottom-width: 0;
 }
 
-#qxvoowfjmu .gt_subtitle {
+#teijaxzbmf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1534,7 +1513,7 @@ time  (1): time
   border-top-width: 0;
 }
 
-#qxvoowfjmu .gt_heading {
+#teijaxzbmf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1546,13 +1525,13 @@ time  (1): time
   border-right-color: #D3D3D3;
 }
 
-#qxvoowfjmu .gt_bottom_border {
+#teijaxzbmf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qxvoowfjmu .gt_col_headings {
+#teijaxzbmf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1567,7 +1546,7 @@ time  (1): time
   border-right-color: #D3D3D3;
 }
 
-#qxvoowfjmu .gt_col_heading {
+#teijaxzbmf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1587,7 +1566,7 @@ time  (1): time
   overflow-x: hidden;
 }
 
-#qxvoowfjmu .gt_column_spanner_outer {
+#teijaxzbmf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1599,15 +1578,15 @@ time  (1): time
   padding-right: 4px;
 }
 
-#qxvoowfjmu .gt_column_spanner_outer:first-child {
+#teijaxzbmf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qxvoowfjmu .gt_column_spanner_outer:last-child {
+#teijaxzbmf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qxvoowfjmu .gt_column_spanner {
+#teijaxzbmf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1619,11 +1598,11 @@ time  (1): time
   width: 100%;
 }
 
-#qxvoowfjmu .gt_spanner_row {
+#teijaxzbmf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qxvoowfjmu .gt_group_heading {
+#teijaxzbmf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1649,7 +1628,7 @@ time  (1): time
   text-align: left;
 }
 
-#qxvoowfjmu .gt_empty_group_heading {
+#teijaxzbmf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1664,15 +1643,15 @@ time  (1): time
   vertical-align: middle;
 }
 
-#qxvoowfjmu .gt_from_md > :first-child {
+#teijaxzbmf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qxvoowfjmu .gt_from_md > :last-child {
+#teijaxzbmf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qxvoowfjmu .gt_row {
+#teijaxzbmf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1691,7 +1670,7 @@ time  (1): time
   overflow-x: hidden;
 }
 
-#qxvoowfjmu .gt_stub {
+#teijaxzbmf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1704,7 +1683,7 @@ time  (1): time
   padding-right: 5px;
 }
 
-#qxvoowfjmu .gt_stub_row_group {
+#teijaxzbmf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1718,15 +1697,15 @@ time  (1): time
   vertical-align: top;
 }
 
-#qxvoowfjmu .gt_row_group_first td {
+#teijaxzbmf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qxvoowfjmu .gt_row_group_first th {
+#teijaxzbmf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qxvoowfjmu .gt_summary_row {
+#teijaxzbmf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1736,16 +1715,16 @@ time  (1): time
   padding-right: 5px;
 }
 
-#qxvoowfjmu .gt_first_summary_row {
+#teijaxzbmf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qxvoowfjmu .gt_first_summary_row.thick {
+#teijaxzbmf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qxvoowfjmu .gt_last_summary_row {
+#teijaxzbmf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1755,7 +1734,7 @@ time  (1): time
   border-bottom-color: #D3D3D3;
 }
 
-#qxvoowfjmu .gt_grand_summary_row {
+#teijaxzbmf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1765,7 +1744,7 @@ time  (1): time
   padding-right: 5px;
 }
 
-#qxvoowfjmu .gt_first_grand_summary_row {
+#teijaxzbmf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1775,7 +1754,7 @@ time  (1): time
   border-top-color: #D3D3D3;
 }
 
-#qxvoowfjmu .gt_last_grand_summary_row_top {
+#teijaxzbmf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1785,11 +1764,11 @@ time  (1): time
   border-bottom-color: #D3D3D3;
 }
 
-#qxvoowfjmu .gt_striped {
+#teijaxzbmf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qxvoowfjmu .gt_table_body {
+#teijaxzbmf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1798,7 +1777,7 @@ time  (1): time
   border-bottom-color: #D3D3D3;
 }
 
-#qxvoowfjmu .gt_footnotes {
+#teijaxzbmf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1812,7 +1791,7 @@ time  (1): time
   border-right-color: #D3D3D3;
 }
 
-#qxvoowfjmu .gt_footnote {
+#teijaxzbmf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1821,7 +1800,7 @@ time  (1): time
   padding-right: 5px;
 }
 
-#qxvoowfjmu .gt_sourcenotes {
+#teijaxzbmf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1835,7 +1814,7 @@ time  (1): time
   border-right-color: #D3D3D3;
 }
 
-#qxvoowfjmu .gt_sourcenote {
+#teijaxzbmf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1843,72 +1822,72 @@ time  (1): time
   padding-right: 5px;
 }
 
-#qxvoowfjmu .gt_left {
+#teijaxzbmf .gt_left {
   text-align: left;
 }
 
-#qxvoowfjmu .gt_center {
+#teijaxzbmf .gt_center {
   text-align: center;
 }
 
-#qxvoowfjmu .gt_right {
+#teijaxzbmf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qxvoowfjmu .gt_font_normal {
+#teijaxzbmf .gt_font_normal {
   font-weight: normal;
 }
 
-#qxvoowfjmu .gt_font_bold {
+#teijaxzbmf .gt_font_bold {
   font-weight: bold;
 }
 
-#qxvoowfjmu .gt_font_italic {
+#teijaxzbmf .gt_font_italic {
   font-style: italic;
 }
 
-#qxvoowfjmu .gt_super {
+#teijaxzbmf .gt_super {
   font-size: 65%;
 }
 
-#qxvoowfjmu .gt_footnote_marks {
+#teijaxzbmf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qxvoowfjmu .gt_asterisk {
+#teijaxzbmf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qxvoowfjmu .gt_indent_1 {
+#teijaxzbmf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qxvoowfjmu .gt_indent_2 {
+#teijaxzbmf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qxvoowfjmu .gt_indent_3 {
+#teijaxzbmf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qxvoowfjmu .gt_indent_4 {
+#teijaxzbmf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qxvoowfjmu .gt_indent_5 {
+#teijaxzbmf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qxvoowfjmu .katex-display {
+#teijaxzbmf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qxvoowfjmu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#teijaxzbmf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1931,66 +1910,66 @@ time  (1): time
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="PlayType">Field Goal</td>
-<td class="gt_row gt_right" headers="Mean">0.0067</td>
-<td class="gt_row gt_right" headers="Median">0.2265</td>
-<td class="gt_row gt_right" headers="SD">1.5247</td>
-<td class="gt_row gt_right" headers="Minimum">−8.1285</td>
-<td class="gt_row gt_right" headers="Maximum">4.2565</td>
-<td class="gt_row gt_right" headers="Count">7902</td>
+<td class="gt_row gt_right" headers="Mean">−0.0504</td>
+<td class="gt_row gt_right" headers="Median">0.3148</td>
+<td class="gt_row gt_right" headers="SD">1.8518</td>
+<td class="gt_row gt_right" headers="Minimum">−5.7970</td>
+<td class="gt_row gt_right" headers="Maximum">1.7852</td>
+<td class="gt_row gt_right" headers="Count">36</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="PlayType">Pass</td>
-<td class="gt_row gt_right" headers="Mean">0.1394</td>
-<td class="gt_row gt_right" headers="Median">−0.1186</td>
-<td class="gt_row gt_right" headers="SD">1.6179</td>
-<td class="gt_row gt_right" headers="Minimum">−12.8496</td>
-<td class="gt_row gt_right" headers="Maximum">9.2273</td>
-<td class="gt_row gt_right" headers="Count">141866</td>
+<td class="gt_row gt_right" headers="Mean">0.2621</td>
+<td class="gt_row gt_right" headers="Median">−0.0300</td>
+<td class="gt_row gt_right" headers="SD">1.6453</td>
+<td class="gt_row gt_right" headers="Minimum">−7.1191</td>
+<td class="gt_row gt_right" headers="Maximum">6.5293</td>
+<td class="gt_row gt_right" headers="Count">500</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="PlayType">Punt</td>
-<td class="gt_row gt_right" headers="Mean">0.0225</td>
-<td class="gt_row gt_right" headers="Median">−0.0056</td>
-<td class="gt_row gt_right" headers="SD">1.2245</td>
-<td class="gt_row gt_right" headers="Minimum">−8.0082</td>
+<td class="gt_row gt_right" headers="Mean">0.1162</td>
+<td class="gt_row gt_right" headers="Median">−0.0041</td>
+<td class="gt_row gt_right" headers="SD">1.4668</td>
+<td class="gt_row gt_right" headers="Minimum">−4.0159</td>
 <td class="gt_row gt_right" headers="Maximum">7.8197</td>
-<td class="gt_row gt_right" headers="Count">19557</td>
+<td class="gt_row gt_right" headers="Count">70</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="PlayType">QB Kneel</td>
-<td class="gt_row gt_right" headers="Mean">−0.0003</td>
+<td class="gt_row gt_right" headers="Mean">0.0000</td>
 <td class="gt_row gt_right" headers="Median">0.0000</td>
-<td class="gt_row gt_right" headers="SD">0.0169</td>
-<td class="gt_row gt_right" headers="Minimum">−0.9470</td>
+<td class="gt_row gt_right" headers="SD">0.0000</td>
+<td class="gt_row gt_right" headers="Minimum">0.0000</td>
 <td class="gt_row gt_right" headers="Maximum">0.0000</td>
-<td class="gt_row gt_right" headers="Count">3133</td>
+<td class="gt_row gt_right" headers="Count">17</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="PlayType">Run</td>
-<td class="gt_row gt_right" headers="Mean">−0.0625</td>
-<td class="gt_row gt_right" headers="Median">−0.2155</td>
-<td class="gt_row gt_right" headers="SD">1.0508</td>
-<td class="gt_row gt_right" headers="Minimum">−13.4941</td>
-<td class="gt_row gt_right" headers="Maximum">9.2731</td>
-<td class="gt_row gt_right" headers="Count">107448</td>
+<td class="gt_row gt_right" headers="Mean">0.0309</td>
+<td class="gt_row gt_right" headers="Median">−0.1363</td>
+<td class="gt_row gt_right" headers="SD">1.0326</td>
+<td class="gt_row gt_right" headers="Minimum">−7.6757</td>
+<td class="gt_row gt_right" headers="Maximum">4.0303</td>
+<td class="gt_row gt_right" headers="Count">509</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="PlayType">Sack</td>
-<td class="gt_row gt_right" headers="Mean">−1.7218</td>
-<td class="gt_row gt_right" headers="Median">−1.5032</td>
-<td class="gt_row gt_right" headers="SD">1.2894</td>
-<td class="gt_row gt_right" headers="Minimum">−12.1485</td>
-<td class="gt_row gt_right" headers="Maximum">3.2555</td>
-<td class="gt_row gt_right" headers="Count">9448</td>
+<td class="gt_row gt_right" headers="Mean">−1.6637</td>
+<td class="gt_row gt_right" headers="Median">−1.7779</td>
+<td class="gt_row gt_right" headers="SD">0.5747</td>
+<td class="gt_row gt_right" headers="Minimum">−2.9597</td>
+<td class="gt_row gt_right" headers="Maximum">−0.7449</td>
+<td class="gt_row gt_right" headers="Count">33</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="PlayType">Spike</td>
-<td class="gt_row gt_right" headers="Mean">−0.3315</td>
-<td class="gt_row gt_right" headers="Median">−0.2831</td>
-<td class="gt_row gt_right" headers="SD">0.2869</td>
-<td class="gt_row gt_right" headers="Minimum">−3.4521</td>
-<td class="gt_row gt_right" headers="Maximum">0.3746</td>
-<td class="gt_row gt_right" headers="Count">584</td>
+<td class="gt_row gt_right" headers="Mean">−0.3390</td>
+<td class="gt_row gt_right" headers="Median">−0.3390</td>
+<td class="gt_row gt_right" headers="SD">0.0759</td>
+<td class="gt_row gt_right" headers="Minimum">−0.3927</td>
+<td class="gt_row gt_right" headers="Maximum">−0.2854</td>
+<td class="gt_row gt_right" headers="Count">2</td>
 </tr>
 </tbody>
 </table>
@@ -1999,22 +1978,18 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  nfl_play_down_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(PlayType <span class="sc">==</span> <span class="st">"Run"</span>, <span class="sc">!</span><span class="fu">is.na</span>(EPA)),</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> EPA)</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of EPA for Running Plays"</span>,</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Expected Points Added (EPA)"</span>,</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count"</span></span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">7</span>, <span class="dv">7</span>) <span class="sc">+</span></span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 73 rows containing non-finite outside the scale range
-(`stat_bin()`).</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  CAR2015_play_down_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(PlayType <span class="sc">==</span> <span class="st">"Run"</span>, <span class="sc">!</span><span class="fu">is.na</span>(EPA)),</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> EPA)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of EPA for Running Plays"</span>,</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Expected Points Added (EPA)"</span>,</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count"</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
 (`geom_bar()`).</code></pre>
@@ -2028,22 +2003,18 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  nfl_play_down_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(PlayType <span class="sc">==</span> <span class="st">"Pass"</span>, <span class="sc">!</span><span class="fu">is.na</span>(EPA)),</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> EPA)</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">8</span>,<span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of EPA for Pass Plays"</span>,</span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Expected Points Added (EPA)"</span>,</span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count"</span></span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 261 rows containing non-finite outside the scale range
-(`stat_bin()`).</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  CAR2015_play_down_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(PlayType <span class="sc">==</span> <span class="st">"Pass"</span>, <span class="sc">!</span><span class="fu">is.na</span>(EPA)),</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> EPA)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">8</span>,<span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of EPA for Pass Plays"</span>,</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Expected Points Added (EPA)"</span>,</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count"</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
 (`geom_bar()`).</code></pre>
@@ -2058,11 +2029,11 @@ time  (1): time
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  nfl_play_down_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(PlayType <span class="sc">==</span> <span class="st">"Pass"</span>, <span class="sc">!</span><span class="fu">is.na</span>(WPA)),</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  CAR2015_play_down_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(PlayType <span class="sc">==</span> <span class="st">"Pass"</span>, <span class="sc">!</span><span class="fu">is.na</span>(WPA)),</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> WPA)</span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.025</span>) <span class="sc">+</span></span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="fl">0.25</span>, <span class="fl">0.25</span>) <span class="sc">+</span></span>
 <span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of WPA for Pass Plays"</span>,</span>
 <span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Win Probability Added (WPA)"</span>,</span>
@@ -2070,7 +2041,7 @@ time  (1): time
 <span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 101 rows containing non-finite outside the scale range
+<pre><code>Warning: Removed 1 row containing non-finite outside the scale range
 (`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
@@ -2087,7 +2058,7 @@ time  (1): time
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  nfl_play_down_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(PlayType <span class="sc">==</span> <span class="st">"Run"</span>, <span class="sc">!</span><span class="fu">is.na</span>(WPA)),</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  CAR2015_play_down_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(PlayType <span class="sc">==</span> <span class="st">"Run"</span>, <span class="sc">!</span><span class="fu">is.na</span>(WPA)),</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> WPA)</span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
 <span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.025</span>) <span class="sc">+</span></span>
@@ -2098,10 +2069,6 @@ time  (1): time
 <span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count"</span></span>
 <span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 202 rows containing non-finite outside the scale range
-(`stat_bin()`).</code></pre>
-</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
 (`geom_bar()`).</code></pre>
@@ -2115,22 +2082,18 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  nfl_play_down_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(PlayType <span class="sc">==</span> <span class="st">"Pass"</span>, <span class="sc">!</span><span class="fu">is.na</span>(EPA)),</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> EPA, <span class="at">fill =</span> PassOutcome)</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">8</span>,<span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of EPA for Pass Plays by Pass Outcome"</span>,</span>
-<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Expected Points Added (EPA)"</span>,</span>
-<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count"</span></span>
-<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 261 rows containing non-finite outside the scale range
-(`stat_bin()`).</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  CAR2015_play_down_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(PlayType <span class="sc">==</span> <span class="st">"Pass"</span>, <span class="sc">!</span><span class="fu">is.na</span>(EPA)),</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> EPA, <span class="at">fill =</span> PassOutcome)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">8</span>,<span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of EPA for Pass Plays by Pass Outcome"</span>,</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Expected Points Added (EPA)"</span>,</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count"</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 4 rows containing missing values or values outside the scale range
 (`geom_bar()`).</code></pre>
@@ -2144,20 +2107,30 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>play_down_counts <span class="ot">&lt;-</span> nfl_play_down_data <span class="sc">|&gt;</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(down, PlayType) <span class="sc">|&gt;</span></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(down) <span class="sc">|&gt;</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>play_type_down_counts <span class="ot">&lt;-</span> CAR2015_play_down_data <span class="sc">|&gt;</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(down, PlayType) <span class="sc">|&gt;</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(down) <span class="sc">|&gt;</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) </span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>play_type_counts <span class="ot">&lt;-</span> CAR2015_play_down_data <span class="sc">|&gt;</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(PlayType) <span class="sc">|&gt;</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(play_down_counts, <span class="fu">aes</span>(PlayType)) <span class="sc">+</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">fill =</span> PlayType, <span class="at">x =</span> <span class="fu">reorder</span>(PlayType, <span class="sc">-</span>n), <span class="at">y =</span> n) <span class="sc">+</span></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Bar Graph of Play Type"</span>,</span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Play Type"</span>,</span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count"</span></span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(play_type_counts,</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(PlayType, <span class="sc">-</span>n), <span class="at">y =</span> n, <span class="at">fill =</span> PlayType)) <span class="sc">+</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> n),</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Carolina Panthers 2015 Season Play Types"</span>,</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Play Type"</span>,</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count"</span></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2167,20 +2140,20 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(play_down_counts <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(down)),</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(PlayType, <span class="sc">-</span>n),</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> n,</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> PlayType)) <span class="sc">+</span></span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>down) <span class="sc">+</span></span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Play Type Distribution by Down"</span>,</span>
-<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Play Type"</span>,</span>
-<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of Plays"</span></span>
-<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
-<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(play_type_down_counts <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(down)),</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(PlayType, <span class="sc">-</span>n),</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> n,</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> PlayType)) <span class="sc">+</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>down) <span class="sc">+</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Play Type Distribution by Down for Carolina Panthers in 2015"</span>,</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Play Type"</span>,</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of Plays"</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2190,15 +2163,19 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nfl_play_down_data,</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(PlayType,</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>           ScoreDiff,</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> PlayType)) <span class="sc">+</span></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 26 rows containing non-finite outside the scale range
-(`stat_boxplot()`).</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(CAR2015_play_down_data,</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(PlayType,</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>           ScoreDiff,</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> PlayType)) <span class="sc">+</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Score Difference When Play Type Called"</span>,</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Play Type"</span>,</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Score Difference"</span></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"None"</span>,</span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2208,19 +2185,19 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nfl_play_down_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(PassOutcome <span class="sc">==</span> <span class="st">"Complete"</span>),</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(AirYards,</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>           yards_gained,</span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="fu">factor</span>(Touchdown))) <span class="sc">+</span></span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">67</span>) <span class="sc">+</span></span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(</span>
-<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Result"</span>,</span>
-<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"No Touchdown"</span>, <span class="st">"Touchdown"</span>)) <span class="sc">+</span></span>
-<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Yards Gained vs. Air Yards"</span>,</span>
-<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Air Yards"</span>,</span>
-<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Yards Gained"</span></span>
-<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(CAR2015_play_down_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(PassOutcome <span class="sc">==</span> <span class="st">"Complete"</span>),</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(AirYards,</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>           yards_gained,</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="fu">factor</span>(Touchdown))) <span class="sc">+</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">67</span>) <span class="sc">+</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Result"</span>,</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"No Touchdown"</span>, <span class="st">"Touchdown"</span>)) <span class="sc">+</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Yards Gained vs. Air Yards"</span>,</span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Air Yards"</span>,</span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Yards Gained"</span></span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2230,19 +2207,19 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nfl_play_down_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(PassOutcome <span class="sc">==</span> <span class="st">"Complete"</span>),</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(AirYards,</span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>           YardsAfterCatch,</span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="fu">factor</span>(Touchdown))) <span class="sc">+</span></span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(</span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Result"</span>,</span>
-<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"No Touchdown"</span>, <span class="st">"Touchdown"</span>)) <span class="sc">+</span></span>
-<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"YAC vs. Air Yards"</span>,</span>
-<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Air Yards"</span>,</span>
-<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Yard After Catch"</span>,</span>
-<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(CAR2015_play_down_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(PassOutcome <span class="sc">==</span> <span class="st">"Complete"</span>),</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(AirYards,</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>           YardsAfterCatch,</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="fu">factor</span>(Touchdown))) <span class="sc">+</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Result"</span>,</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"No Touchdown"</span>, <span class="st">"Touchdown"</span>)) <span class="sc">+</span></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"YAC vs. Air Yards"</span>,</span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Air Yards"</span>,</span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Yard After Catch"</span>,</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2252,43 +2229,23 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>heat_data <span class="ot">&lt;-</span> nfl_data <span class="sc">|&gt;</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PlayType <span class="sc">==</span> <span class="st">"End of Game"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(HomeTeam, AwayTeam) <span class="sc">|&gt;</span></span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">final_score_diff =</span> <span class="fu">mean</span>(Home_WP_post, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>  heat_data,</span>
-<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
-<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> AwayTeam,</span>
-<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> HomeTeam,</span>
-<span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> final_score_diff</span>
-<span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb61-17"><a href="#cb61-17" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb61-18"><a href="#cb61-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb61-19"><a href="#cb61-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb61-20"><a href="#cb61-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Home Team Winning Percent HeatMap vs. All Other Teams"</span>,</span>
-<span id="cb61-21"><a href="#cb61-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Away Team"</span>,</span>
-<span id="cb61-22"><a href="#cb61-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Home Team"</span>,</span>
-<span id="cb61-23"><a href="#cb61-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Win% Home Team"</span></span>
-<span id="cb61-24"><a href="#cb61-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb61-25"><a href="#cb61-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">limits =</span> rev) <span class="sc">+</span></span>
-<span id="cb61-26"><a href="#cb61-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb61-27"><a href="#cb61-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb61-28"><a href="#cb61-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"darkgrey"</span>),</span>
-<span id="cb61-29"><a href="#cb61-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb61-30"><a href="#cb61-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb61-31"><a href="#cb61-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb61-32"><a href="#cb61-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(</span>
-<span id="cb61-33"><a href="#cb61-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">low =</span> <span class="st">"red"</span>,</span>
-<span id="cb61-34"><a href="#cb61-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">mid =</span> <span class="st">"white"</span>,</span>
-<span id="cb61-35"><a href="#cb61-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">high =</span> <span class="st">"blue"</span>,</span>
-<span id="cb61-36"><a href="#cb61-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">midpoint =</span> <span class="fl">0.5</span></span>
-<span id="cb61-37"><a href="#cb61-37" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>CAR2015_play_down_data <span class="sc">|&gt;</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(EPA)) <span class="sc">|&gt;</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> EPA,</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> PlayType,</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> PlayType</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of EPA by Play Type"</span>,</span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Expected Points Added (EPA)"</span>,</span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Play Type"</span></span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"None"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Picking joint bandwidth of 0.304</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2298,40 +2255,27 @@ time  (1): time
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>nfc_south <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"CAR"</span>, <span class="st">"NO"</span>, <span class="st">"TB"</span>, <span class="st">"ATL"</span>)</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>heat_nfc_south_data <span class="ot">&lt;-</span> heat_data <span class="sc">|&gt;</span></span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(HomeTeam <span class="sc">%in%</span> nfc_south, AwayTeam <span class="sc">%in%</span> nfc_south)</span>
-<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>  heat_nfc_south_data,</span>
-<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
-<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> AwayTeam,</span>
-<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> HomeTeam,</span>
-<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> final_score_diff</span>
-<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Home Team Winning Percent HeatMap vs. Division Opponent"</span>,</span>
-<span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Away Team"</span>,</span>
-<span id="cb62-19"><a href="#cb62-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Home Team"</span>,</span>
-<span id="cb62-20"><a href="#cb62-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Win% Home Team"</span></span>
-<span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb62-22"><a href="#cb62-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">limits =</span> rev) <span class="sc">+</span></span>
-<span id="cb62-23"><a href="#cb62-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb62-24"><a href="#cb62-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb62-25"><a href="#cb62-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"darkgrey"</span>),</span>
-<span id="cb62-26"><a href="#cb62-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb62-27"><a href="#cb62-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb62-28"><a href="#cb62-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb62-29"><a href="#cb62-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(</span>
-<span id="cb62-30"><a href="#cb62-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">low =</span> <span class="st">"red"</span>,</span>
-<span id="cb62-31"><a href="#cb62-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">mid =</span> <span class="st">"white"</span>,</span>
-<span id="cb62-32"><a href="#cb62-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">high =</span> <span class="st">"blue"</span>,</span>
-<span id="cb62-33"><a href="#cb62-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">midpoint =</span> <span class="fl">0.5</span>,</span>
-<span id="cb62-34"><a href="#cb62-34" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>CAR2015_play_down_data <span class="sc">|&gt;</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(EPA)) <span class="sc">|&gt;</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> WPA,</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> PlayType,</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> PlayType</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of WPA by Play Type"</span>,</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Win Probability Added"</span>,</span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Play Type"</span></span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"None"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Picking joint bandwidth of 0.01</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 9 rows containing non-finite outside the scale range
+(`stat_density_ridges()`).</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
