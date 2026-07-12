@@ -4,11 +4,15 @@ author: "Evan Whitfield"
 format: html
 ---
 ```{r}
+#Load in libraries
 library(tidyr)
 library(readr)
 library(dplyr)
 library(gt)
 library(ggplot2)
+library(shiny)
+library(DT)
+library(bslib)
 ```
 
 
@@ -21,38 +25,49 @@ nfl_data <- read_csv("data/NFL_play_data.csv") |>
 ```
 ```{r}
 dim(nfl_data)
-str(nfl_data, max_level=1)
+colnames(nfl_data)
 ```
 
 ```{r}
-pan_play_data <- nfl_data |>
-  filter(posteam == "CAR")
+play_type_table <- nfl_data |>
+  count(PlayType) |>
+  gt() |>
+  tab_header(
+    title = "Frequency of Play Types"
+  ) |>
+  cols_label(
+    PlayType = "Play Type",
+    n = "Count"
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels(everything())
+  ) |>
+  opt_row_striping()
 
-dim(pan_play_data)
-
-unique(nfl_data$posteam)
-```
-
-
-```{r}
-pan_rp_play_data <- pan_play_data |>
-  filter(PlayType %in% c("Run", "Pass"))
-
-dim(pan_rp_play_data)
-
-table(pan_rp_play_data$PlayType)
-```
-
-
-```{r}
-nfc_south_data <- nfl_data |>
-  filter(PlayType %in% c("Run", "Pass"),
-         posteam %in% c("CAR", "NO", "TB", "ATL")) |>
-  select(posteam, PlayType, yards_gained)
+play_type_table
 ```
 
 
 ```{r}
-head(nfc_south_data)
+play_table <- nfl_data |>
+  count(PlayType, down) |>
+  pivot_wider(
+    names_from = down,
+    values_from = n,
+    values_fill = 0
+  )
+
+play_table
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
 ```
 
