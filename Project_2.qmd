@@ -27,6 +27,10 @@ nfl_data <- read_csv("data/NFL_play_data.csv") |>
 dim(nfl_data)
 colnames(nfl_data)
 ```
+```{r}
+unique(nfl_data$PlayType)
+```
+
 
 ```{r}
 play_type_table <- nfl_data |>
@@ -47,10 +51,22 @@ play_type_table <- nfl_data |>
 
 play_type_table
 ```
+```{r}
+nfl_play_down_data <- nfl_data |>
+  filter(!PlayType %in% c("End of Game", 
+                          "Extra Point", 
+                          "Half End", 
+                          "Kickoff", 
+                          "Quarter End",
+                          "Two Minute Warning",
+                          "Timeout",
+                          "No Play"))
+```
+
 
 
 ```{r}
-play_table <- nfl_data |>
+play_table <- nfl_play_down_data |>
   count(PlayType, down) |>
   pivot_wider(
     names_from = down,
@@ -63,11 +79,209 @@ play_table
 
 
 ```{r}
+WPA_sum_table <- nfl_play_down_data |>
+  group_by(PlayType) |>
+  summarize(
+    Mean = mean(WPA, na.rm = TRUE),
+    Median = median(WPA, na.rm = TRUE),
+    SD = sd(WPA, na.rm = TRUE),
+    Minimum = min(WPA, na.rm = TRUE),
+    Maximum = max(WPA, na.rm = TRUE),
+    Count = n(),
+    .groups = "drop"
+  ) |>
+  gt() |>
+  fmt_number(
+    columns = c(Mean, Median, SD, Minimum, Maximum),
+    decimals = 4
+  ) |>
+  tab_header(
+    title = "WPA Summary by Play Type"
+  )
 
+WPA_sum_table
 ```
 
 
 ```{r}
+EPA_sum_table <- nfl_play_down_data |>
+  group_by(PlayType) |>
+  summarize(
+    Mean = mean(EPA, na.rm = TRUE),
+    Median = median(EPA, na.rm = TRUE),
+    SD = sd(EPA, na.rm = TRUE),
+    Minimum = min(EPA, na.rm = TRUE),
+    Maximum = max(EPA, na.rm = TRUE),
+    Count = n(),
+    .groups = "drop"
+  ) |>
+  gt() |>
+  fmt_number(
+    columns = c(Mean, Median, SD, Minimum, Maximum),
+    decimals = 4
+  ) |>
+  tab_header(
+    title = "EPA Summary by Play Type"
+  )
 
+EPA_sum_table
 ```
+
+```{r}
+ggplot(
+  nfl_play_down_data |> filter(PlayType == "Run", !is.na(EPA)),
+  aes(x = EPA)
+) +
+  geom_histogram(binwidth = 0.25) +
+  labs(
+    title = "Distribution of EPA for Running Plays",
+    x = "Expected Points Added (EPA)",
+    y = "Count"
+  ) +
+  xlim(-7, 7) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(
+  nfl_play_down_data |> filter(PlayType == "Pass", !is.na(EPA)),
+  aes(x = EPA)
+) +
+  geom_histogram(binwidth = 0.25) +
+  xlim(-8,8) +
+  labs(
+    title = "Distribution of EPA for Pass Plays",
+    x = "Expected Points Added (EPA)",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+
+
+```{r}
+ggplot(
+  nfl_play_down_data |> filter(PlayType == "Pass", !is.na(WPA)),
+  aes(x = WPA)
+) +
+  geom_histogram(binwidth = 0.025) +
+  xlim(-0.5, 0.5) +
+  labs(
+    title = "Distribution of WPA for Pass Plays",
+    x = "Win Probability Added (WPA)",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(
+  nfl_play_down_data |> filter(PlayType == "Run", !is.na(WPA)),
+  aes(x = WPA)
+) +
+  geom_histogram(binwidth = 0.025) +
+  xlim(-0.2, 0.2) +
+  labs(
+    title = "Distribution of WPA for Run Plays",
+    x = "Win Probability Added (WPA)",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+
+
+
+
+```{r}
+ggplot(
+  nfl_play_down_data |> filter(PlayType == "Pass", !is.na(EPA)),
+  aes(x = EPA, fill = PassOutcome)
+) +
+  geom_histogram(binwidth = 0.25) +
+  xlim(-8,8) +
+  labs(
+    title = "Distribution of EPA for Pass Plays by Pass Outcome",
+    x = "Expected Points Added (EPA)",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+play_down_counts <- nfl_play_down_data |>
+  count(down, PlayType) |>
+  group_by(down) |>
+  arrange(desc(n)) 
+```
+
+
+```{r}
+ggplot(play_down_counts, aes(PlayType)) +
+  aes(fill = PlayType, x = reorder(PlayType, -n), y = n) +
+  geom_col() + 
+  labs(
+    title = "Bar Graph of Play Type",
+    x = "Play Type",
+    y = "Count"
+  )
+```
+
+```{r}
+ggplot(play_down_counts |> filter(!is.na(down)),
+       aes(x = reorder(PlayType, -n),
+           y = n,
+           fill = PlayType)) +
+  geom_col() +
+  facet_wrap(~down) +
+  labs(
+    title = "Play Type Distribution by Down",
+    x = "Play Type",
+    y = "Number of Plays"
+  ) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+```
+
+
+```{r}
+ggplot(nfl_play_down_data,
+       aes(PlayType,
+           ScoreDiff,
+           fill = PlayType)) +
+    geom_boxplot()
+```
+
+
+```{r}
+ggplot(nfl_play_down_data |> filter(PassOutcome == "Complete"),
+       aes(AirYards,
+           yards_gained,
+           color = factor(Touchdown))) +
+  geom_point(alpha = .67) +
+  scale_color_discrete(
+    name = "Result",
+    labels = c("No Touchdown", "Touchdown")) +
+  labs(
+    title = "Yards Gained vs. Air Yards",
+    x = "Air Yards",
+    y = "Yards Gained"
+  )
+```
+
+```{r}
+ggplot(nfl_play_down_data |> filter(PassOutcome == "Complete"),
+       aes(AirYards,
+           YardsAfterCatch,
+           color = factor(Touchdown))) +
+  geom_point(alpha = .5) +
+  scale_color_discrete(
+    name = "Result",
+    labels = c("No Touchdown", "Touchdown")) +
+  labs(
+    title = "YAC vs. Air Yards",
+    x = "Air Yards",
+    y = "Yard After Catch",
+  )
+```
+
 
