@@ -159,7 +159,6 @@ ggplot(
     y = "Count"
   ) +
   xlim(-8, 8) +
-  theme_minimal()
 ```
 
 ```{r}

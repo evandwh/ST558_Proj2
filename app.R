@@ -38,9 +38,17 @@ ui <- fluidPage(
     headerPanel("NFL Play Data (2009-2016)"),
     sidebarPanel(
       selectInput("team",
-                "Select Team",
-                sort(unique(nfl_data$HomeTeam))
-      )
+                  "Select Team",
+                  sort(unique(nfl_data$HomeTeam))
+      ),
+      selectInput("playtype",
+                  "Select Play Type:",
+                  c("Run", "Pass", "Field Goal", "Spike", "Punt", "QB Kneel", "Sack")
+      ),
+      radioButtons("pa",
+                   "Select One",
+                   c("EPA", "WPA")
+                   )
     ),
     card(
       plotOutput(outputId = "histogram")
@@ -57,16 +65,17 @@ server <- function(input, output, session){
     
     nfl_data |>
       filter(posteam == input$team,
+             PlayType == input$playtype,
              !is.na(yards_gained)) |>
-      ggplot(aes(x = yards_gained)) +
+      ggplot(aes(x = .data[[input$pa]])) +
       geom_histogram(
         binwidth = 5,
         fill = "steelblue",
         color = "black"
       ) +
       labs(
-        title = paste("Distribution of Yards Gained by", input$team),
-        x = "Yards Gained",
+        title = paste(input$pa, "per", input$playtype, "for", input$team),
+        x = input$pa,
         y = "Count"
       )
   })
