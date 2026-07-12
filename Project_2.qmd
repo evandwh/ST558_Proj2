@@ -21,14 +21,42 @@ library(bslib)
 
 ```{r}
 nfl_data <- read_csv("data/NFL_play_data.csv") |>
-  rename(yards_gained = Yards.Gained)
+  rename(yards_gained = Yards.Gained) |>
+  #Need to change the name of a couple of teams to make sure that there are only 32 teams listed.
+  mutate(
+    posteam = recode(
+      posteam,
+      "STL" = "LA",
+      "JAC" = "JAX"
+    ),
+    DefensiveTeam = recode(
+      DefensiveTeam,
+      "STL" = "LA",
+      "JAC" = "JAX"
+    ),
+    HomeTeam = recode(
+      HomeTeam,
+      "STL" = "LA",
+      "JAC" = "JAX"
+    ),
+    AwayTeam = recode(
+      AwayTeam,
+      "STL" = "LA",
+      "JAC" = "JAX"
+    )
+  )
+
 ```
+
+
 ```{r}
 dim(nfl_data)
 colnames(nfl_data)
 ```
 ```{r}
 unique(nfl_data$PlayType)
+
+table(nfl_data$PlayType)
 ```
 
 
@@ -284,4 +312,83 @@ ggplot(nfl_play_down_data |> filter(PassOutcome == "Complete"),
   )
 ```
 
+
+```{r}
+heat_data <- nfl_data |>
+  filter(PlayType == "End of Game") |>
+  group_by(HomeTeam, AwayTeam) |>
+  summarize(
+    final_score_diff = mean(Home_WP_post, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+
+ggplot(
+  heat_data,
+  aes(
+    x = AwayTeam,
+    y = HomeTeam,
+    fill = final_score_diff
+  )
+) +
+  geom_tile() +
+  labs(
+    title = "Home Team Winning Percent HeatMap vs. All Other Teams",
+    x = "Away Team",
+    y = "Home Team",
+    fill = "Win% Home Team"
+  ) +
+  scale_y_discrete(limits = rev) +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5),
+    panel.background = element_rect(fill = "darkgrey"),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  ) +
+  scale_fill_gradient2(
+  low = "red",
+  mid = "white",
+  high = "blue",
+  midpoint = 0.5
+)
+```
+
+
+
+```{r}
+nfc_south <- c("CAR", "NO", "TB", "ATL")
+
+heat_nfc_south_data <- heat_data |>
+  filter(HomeTeam %in% nfc_south, AwayTeam %in% nfc_south)
+
+
+ggplot(
+  heat_nfc_south_data,
+  aes(
+    x = AwayTeam,
+    y = HomeTeam,
+    fill = final_score_diff
+  )
+) +
+  geom_tile(color = "black") +
+  labs(
+    title = "Home Team Winning Percent HeatMap vs. Division Opponent",
+    x = "Away Team",
+    y = "Home Team",
+    fill = "Win% Home Team"
+  ) +
+  scale_y_discrete(limits = rev) +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5),
+    panel.background = element_rect(fill = "darkgrey"),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  ) +
+  scale_fill_gradient2(
+  low = "red",
+  mid = "white",
+  high = "blue",
+  midpoint = 0.5,
+)
+```
 
