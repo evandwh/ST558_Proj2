@@ -331,7 +331,7 @@ ggplot(
     fill = final_score_diff
   )
 ) +
-  geom_tile() +
+  geom_tile(color = "black") +
   labs(
     title = "Home Team Winning Percent HeatMap vs. All Other Teams",
     x = "Away Team",
@@ -391,4 +391,5 @@ ggplot(
   midpoint = 0.5,
 )
 ```
+
 
