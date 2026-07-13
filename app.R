@@ -1,3 +1,11 @@
+
+# Author: Evan Whitfield
+# Purpose: ST 558 Project 2
+# Last edited: 07-13-2026
+
+# Still need to do about tab, and get all graphs and tables in the data exploration.
+# Still need to make it look clean.
+
 library(tidyr)
 library(readr)
 library(dplyr)
@@ -153,34 +161,96 @@ ui <- fluidPage(
           )
         ),
           
-        #Third Tab
+        # Third Tab
         tabPanel(
           "Data Exploration",
           value = "explore",
-          plotOutput("histogram1"),
-          sliderInput(
-            inputId = "binwidth1",
-            label = "Histogram Bin Width:",
-            min = 1,
-            max = 5,
-            value = 1,
-            step = 0.5
-          ),
-          plotOutput("histogram2"),
-          sliderInput(
-            inputId = "binwidth2",
-            label = "Histogram Bin Width:",
-            min = 1,
-            max = 5,
-            value = 1,
-            step = 0.5
-          )
+          
+          tabsetPanel(
+            
+            # -------------------
+            # Histograms
+            # -------------------
+            tabPanel(
+              "Histograms",
+              
+              plotOutput("histogram1"),
+              
+              sliderInput(
+                "binwidth1",
+                "Histogram 1 Bin Width",
+                min = 1,
+                max = 5,
+                value = 1,
+                step = 0.5
+              ),
+              
+              hr(),
+              
+              plotOutput("histogram2"),
+              
+              sliderInput(
+                "binwidth2",
+                "Histogram 2 Bin Width",
+                min = 1,
+                max = 5,
+                value = 1,
+                step = 0.5
+              )
+            ),
+            
+            # -------------------
+            # Categorical Summaries
+            # -------------------
+            tabPanel(
+              "Categorical Summaries",
+              
+              h3("Play Type Counts", align = "center"),
+              gt_output("playtype_table"),
+              
+              br(),
+              
+              h3("Play Type by Down", align = "center"),
+              gt_output("playtype_down_table"),
+              
+              br(),
+              
+              h3("Play Type by Quarter", align = "center"),
+              gt_output("playtype_qtr_table")
+              
+            ),
+            
+            # -------------------
+            # Numeric Summaries
+            # -------------------
+            tabPanel(
+              "Numeric Summaries",
+              
+              gt_output("numeric_summary")
+            ),
+            
+            # -------------------
+            # Other Graphs
+            # -------------------
+            tabPanel(
+              "Other Graphs",
+              
+              plotOutput("scatterplot"),
+              
+              br(),
+              
+              plotOutput("boxplot"),
+              
+              br(),
+              
+              plotOutput("heatmap")
+            )
         )
       )
     )
   )
 )
-
+)
 
 server <- function(input, output, session){
   
@@ -223,7 +293,6 @@ server <- function(input, output, session){
         data <- nfl_data |>
           filter(
             posteam %in% input$team,
-            PlayType == input$playtype,
             Season %in% input$season,
             qtr %in% input$qtr,
             down %in% input$down,
@@ -236,7 +305,7 @@ server <- function(input, output, session){
               .data[[input$num_var2]],
               input$num_range2[1],
               input$num_range2[2]
-            ),
+            )
           )
         
         if (input$defteam_filter == "specific") {
@@ -253,7 +322,10 @@ server <- function(input, output, session){
     
     req(filtered_data())
     
-    filtered_data()
+    play_data <- filtered_data() |>
+      filter(PlayType == input$playtype)
+      
+    play_data
   })
   
   output$download_data <- downloadHandler(
@@ -283,7 +355,8 @@ server <- function(input, output, session){
     
     state <- app_state()
     
-    state$data |>
+    state$data |> 
+      filter(PlayType == input$playtype) |>
       ggplot(aes(x = .data[[state$num_var1]])) +
       geom_histogram(
         binwidth = input$binwidth1,
@@ -304,6 +377,7 @@ server <- function(input, output, session){
     state <- app_state()
     
     state$data |>
+      filter(PlayType == input$playtype) |>
       ggplot(aes(x = .data[[state$num_var2]])) +
       geom_histogram(
         binwidth = input$binwidth2,
@@ -315,6 +389,72 @@ server <- function(input, output, session){
         x = state$num_var2,
         y = "Count"
       )
+  })
+  
+  output$playtype_table <- render_gt({
+    
+    req(app_state())
+    
+    state <- app_state()
+    
+    state$data |>
+      count(PlayType, name = "Count") |>
+      gt() |>
+      cols_label(
+        PlayType = "Play Type",
+        Count = "Count"
+      ) |>
+      opt_row_striping()
+    
+  })
+  
+  output$playtype_down_table <- render_gt({
+    
+    req(app_state())
+    
+    state <- app_state()
+    
+    state$data |>
+      count(PlayType, down) |>
+      pivot_wider(
+        names_from = down,
+        values_from = n,
+        values_fill = 0
+      ) |>
+      gt() |>
+      cols_label(
+        PlayType = "Play Type",
+        `1` = "1st",
+        `2` = "2nd",
+        `3` = "3rd",
+        `4` = "4th",
+      ) |>
+      opt_row_striping()
+  })
+  
+  output$playtype_qtr_table <- render_gt({
+    
+    req(app_state())
+    
+    state <- app_state()
+    
+    state$data |>
+      count(PlayType, qtr) |>
+      pivot_wider(
+        names_from = qtr,
+        values_from = n,
+        values_fill = 0
+      ) |>
+      gt() |>
+      cols_label(
+        PlayType = "Play Type",
+        `1st` = "1st",
+        `2nd` = "2nd",
+        `3rd` = "3rd",
+        `4th` = "4th",
+        `OT` = "Overtime"
+      ) |>
+      opt_row_striping()
   })
   
   app_state <- eventReactive(input$apply, {
