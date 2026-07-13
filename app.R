@@ -144,7 +144,13 @@ ui <- fluidPage(
         #Second Tab
         tabPanel(
           "Data Download",
-          value = "download"
+          value = "download",
+          DT::dataTableOutput("data_table"),
+          
+          downloadButton(
+            "download_data",
+            "Download Data"
+          )
         ),
           
         #Third Tab
@@ -242,6 +248,34 @@ server <- function(input, output, session){
       }
     )
   })
+  
+  output$data_table <- DT::renderDataTable({
+    
+    req(filtered_data())
+    
+    filtered_data()
+  })
+  
+  output$download_data <- downloadHandler(
+    
+    filename = function() {
+      paste0(
+        "NFL_filtered_data_",
+        Sys.Date(),
+        ".csv"
+      )
+    },
+    
+    content = function(file) {
+      
+      write.csv(
+        filtered_data(),
+        file,
+        row.names = FALSE
+      )
+      
+    }
+  )
   
   output$histogram1 <- renderPlot({
     
