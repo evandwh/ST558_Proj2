@@ -34,8 +34,6 @@ all_nfl_data <- read_csv("data/NFL_play_data.csv") |>
       )
     )
   )
-  
-
 ```
 
 

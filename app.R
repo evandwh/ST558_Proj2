@@ -7,7 +7,7 @@ library(shiny)
 library(DT)
 library(bslib)
 
-nfl_data <- read_csv("data/NFL_play_data.csv") |>
+all_nfl_data <- read_csv("data/NFL_play_data.csv") |>
   rename(yards_gained = Yards.Gained) |>
   #Need to change the name of a couple of teams to make sure that there are only 32 teams listed.
   mutate(
@@ -21,6 +21,17 @@ nfl_data <- read_csv("data/NFL_play_data.csv") |>
     )
   )
 
+nfl_data <- all_nfl_data |>
+  select(PlayType, posteam, yards_gained, down, qtr, 
+         ydstogo, ScoreDiff, Season, PassOutcome, DefensiveTeam) |>
+  filter(!PlayType %in% c("End of Game", 
+                          "Extra Point", 
+                          "Half End", 
+                          "Kickoff", 
+                          "Quarter End",
+                          "Two Minute Warning",
+                          "Timeout",
+                          "No Play"))
 
 ui <- fluidPage(
   pageWithSidebar(
@@ -31,19 +42,19 @@ ui <- fluidPage(
     #Sidebar
     sidebarPanel(
       
-      #2nd tab
+      #2nd tab - Histogram
       conditionalPanel(
         condition = "input.tabs == 'pa_by_type'",
         
         selectInput(
           "team",
           "Select Team:",
-          choices = sort(unique(nfl_data$HomeTeam))
+          choices = sort(unique(nfl_data$posteam))
         ),
         selectInput(
           "playtype",
           "Select Play Type:",
-          c("Run", "Pass", "Field Goal", "Spike", "Punt", "QB Kneel", "Sack")
+          c("Run", "Pass")
         ),
         selectInput(
           inputId = "season",
@@ -51,10 +62,6 @@ ui <- fluidPage(
           choices = sort(unique(nfl_data$Season)),
           selected = "2009",
           multiple = TRUE
-        ),
-        radioButtons("pa",
-                     "Select One",
-                     c("EPA", "WPA")
         ),
         actionButton(
           "apply",
@@ -67,7 +74,7 @@ ui <- fluidPage(
         condition = "input.tabs == 'pa_all'",
         selectInput("team",
                   "Select Team",
-                  sort(unique(nfl_data$HomeTeam))
+                  sort(unique(nfl_data$posteam))
         ),
         selectInput(
           inputId = "season",
@@ -75,10 +82,6 @@ ui <- fluidPage(
           choices = sort(unique(nfl_data$Season)),
           selected = "2009",
           multiple = TRUE
-        ),
-        radioButtons("pa",
-                   "Select One",
-                   c("EPA","WPA")
         ),
         actionButton(
           "apply",
@@ -102,7 +105,15 @@ ui <- fluidPage(
         tabPanel(
           "By Individual Play Type",
           value = "pa_by_type",
-          plotOutput("histogram")
+          plotOutput("histogram"),
+          sliderInput(
+            inputId = "binwidth",
+            label = "Histogram Bin Width:",
+            min = 1,
+            max = 5,
+            value = 1,
+            step = 0.5
+          )
         ),
           
         #Third Tab
@@ -121,23 +132,18 @@ server <- function(input, output, session){
   
   output$histogram <- renderPlot({
     
-    req(input$pa)
     req(filtered_data())
-    
-    bin_width <- (
-      max(filtered_data()[[input$pa]], na.rm = TRUE) - 
-      min(filtered_data()[[input$pa]], na.rm = TRUE)) / 10
 
     filtered_data() |>
-      ggplot(aes(x = .data[[input$pa]])) +
+      ggplot(aes(x = filtered_data()$yards_gained)) +
       geom_histogram(
-        binwidth = bin_width,
+        binwidth = input$binwidth,
         fill = "steelblue",
         color = "black"
       ) +
       labs(
-        title = paste(isolate(input$pa), "per", input$playtype, "for", input$team),
-        x = input$pa,
+        title = paste("Yards Gained per", input$playtype, "for", input$team),
+        x = "Yards Gained",
         y = "Count"
       )
   })
@@ -146,12 +152,6 @@ server <- function(input, output, session){
     req(input$pa)
     req(filtered_data())
     
-    limits <- switch(
-      input$pa,
-      "EPA" = c(-8, 8),
-      "WPA" = c(-0.3, 0.3),
-      NULL
-    )
     
     filtered_data() |>
       ggplot(aes(
@@ -171,13 +171,16 @@ server <- function(input, output, session){
   
   
   filtered_data <- eventReactive(input$apply, {
-    
-    nfl_data |>
-      filter(
-        posteam == input$team,
-        PlayType == input$playtype,
-        Season %in% input$season
+    withProgress(
+      message = "Filtering Data...",
+      value = 1,
+      nfl_data |>
+        filter(
+          posteam == input$team,
+          PlayType == input$playtype,
+          Season %in% input$season
       )
+    )
   })
 }
 
