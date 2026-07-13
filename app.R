@@ -151,9 +151,18 @@ ui <- fluidPage(
         tabPanel(
           "Data Exploration",
           value = "explore",
-          plotOutput("histogram"),
+          plotOutput("histogram1"),
           sliderInput(
-            inputId = "binwidth",
+            inputId = "binwidth1",
+            label = "Histogram Bin Width:",
+            min = 1,
+            max = 5,
+            value = 1,
+            step = 0.5
+          ),
+          plotOutput("histogram2"),
+          sliderInput(
+            inputId = "binwidth2",
             label = "Histogram Bin Width:",
             min = 1,
             max = 5,
@@ -234,24 +243,53 @@ server <- function(input, output, session){
     )
   })
   
-  output$histogram <- renderPlot({
+  output$histogram1 <- renderPlot({
     
-    req(filtered_data())
-
-    filtered_data() |>
-      ggplot(aes(x = .data[[input$num_var1]])) +
+    req(app_state())
+    
+    state <- app_state()
+    
+    state$data |>
+      ggplot(aes(x = .data[[state$num_var1]])) +
       geom_histogram(
-        binwidth = input$binwidth,
+        binwidth = input$binwidth1,
         fill = "steelblue",
         color = "black"
       ) +
       labs(
-        title = paste(input$num_var1, "per", input$playtype, "for", input$team),
-        x = "Yards Gained",
+        title = paste(state$num_var1, "per", input$playtype, "for", input$team),
+        x = state$num_var1,
         y = "Count"
       )
   })
   
+  output$histogram2 <- renderPlot({
+    
+    req(app_state())
+    
+    state <- app_state()
+    
+    state$data |>
+      ggplot(aes(x = .data[[state$num_var2]])) +
+      geom_histogram(
+        binwidth = input$binwidth2,
+        fill = "pink",
+        color = "black"
+      ) +
+      labs(
+        title = paste(state$num_var2, "per", input$playtype, "for", input$team),
+        x = state$num_var2,
+        y = "Count"
+      )
+  })
+  
+  app_state <- eventReactive(input$apply, {
+    list(
+      data = filtered_data(),
+      num_var1 = input$num_var1,
+      num_var2 = input$num_var2
+    )
+  })
 
 }
 
