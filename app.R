@@ -19,6 +19,13 @@ all_nfl_data <- read_csv("data/NFL_play_data.csv") |>
         "JAC" = "JAX"
       )
     )
+  ) |>
+  mutate(
+    qtr = factor(
+      qtr,
+      levels = c(1, 2, 3, 4, 5),
+      labels = c("1st", "2nd", "3rd", "4th", "OT")
+    )
   )
 
 nfl_data <- all_nfl_data |>
@@ -41,54 +48,85 @@ ui <- fluidPage(
     
     #Sidebar
     sidebarPanel(
-      
-      #2nd tab - Histogram
-      conditionalPanel(
-        condition = "input.tabs == 'pa_by_type'",
         
-        selectInput(
-          "team",
-          "Select Team:",
-          choices = sort(unique(nfl_data$posteam))
-        ),
-        selectInput(
-          "playtype",
-          "Select Play Type:",
-          c("Run", "Pass")
-        ),
-        selectInput(
-          inputId = "season",
-          label = "Select Season(s):",
-          choices = sort(unique(nfl_data$Season)),
-          selected = "2009",
-          multiple = TRUE
-        ),
-        actionButton(
-          "apply",
-          "Apply Filters"
+      selectInput(
+        "team",
+        "Select Team:",
+        choices = sort(unique(nfl_data$posteam)),
+        selected = "CAR",
+        multiple = TRUE
+      ),
+      selectInput(
+        "playtype",
+        "Select Play Type:",
+        c("Run", "Pass")
+      ),
+      selectInput(
+        inputId = "season",
+        label = "Select Season(s):",
+        choices = sort(unique(nfl_data$Season)),
+        selected = "2015",
+        multiple = TRUE
+      ),
+      selectInput(
+        "num_var1",
+        "Numeric Variable 1:",
+        choices = c(
+          "Yards Gained" = "yards_gained",
+          "Yards to Go" = "ydstogo",
+          "Score Differential" = "ScoreDiff"
         )
       ),
-      
-      #3rd tab
+      uiOutput("num_slider1"),
+      selectInput(
+        "num_var2",
+        "Numeric Variable 2:",
+        choices = c(
+          "Yards Gained" = "yards_gained",
+          "Yards to Go" = "ydstogo",
+          "Score Differential" = "ScoreDiff"
+        )
+      ),
+      uiOutput("num_slider2"),
+      selectInput(
+        "down",
+        "Down:",
+        choices = c("1", "2", "3", "4"),
+        selected = c("1", "2", "3", "4"),
+        multiple = TRUE
+      ),
+      selectInput(
+        "qtr",
+        "Quarter",
+        choices = c("1st", "2nd", "3rd", "4th", "OT"),
+        selected = c("1st", "2nd", "3rd", "4th", "OT"),
+        multiple = TRUE
+      ),
+      radioButtons(
+        "defteam_filter",
+        "Opponent Filter:",
+        choices = c(
+          "Whole Season" = "all",
+          "Specific Team(s)" = "specific"
+        ),
+        selected = "all"
+      ),
       conditionalPanel(
-        condition = "input.tabs == 'pa_all'",
-        selectInput("team",
-                  "Select Team",
-                  sort(unique(nfl_data$posteam))
-        ),
+        condition = "input.defteam_filter == 'specific'",
         selectInput(
-          inputId = "season",
-          label = "Select Season(s):",
-          choices = sort(unique(nfl_data$Season)),
-          selected = "2009",
+          "defteam",
+          "Select Defending Team(s):",
+          choices = sort(unique(nfl_data$DefensiveTeam)),
+          selected = "ATL",
           multiple = TRUE
-        ),
-        actionButton(
-          "apply",
-          "Apply Filters"
         )
       ),
+      actionButton(
+        "apply",
+        "Apply Filters"
+      )
     ),
+    
     #Main Area
     mainPanel(
       tabsetPanel(
@@ -98,13 +136,21 @@ ui <- fluidPage(
         tabPanel(
           "About the Project",
           value = "about",
-          h3("About the Data")
+          h2("About the App"),
+          h5("More info about the data can be found at 
+             https://www.kaggle.com/datasets/maxhorowitz/nflplaybyplay2009to2016/data")
         ),
           
         #Second Tab
         tabPanel(
-          "By Individual Play Type",
-          value = "pa_by_type",
+          "Data Download",
+          value = "download"
+        ),
+          
+        #Third Tab
+        tabPanel(
+          "Data Exploration",
+          value = "explore",
           plotOutput("histogram"),
           sliderInput(
             inputId = "binwidth",
@@ -114,13 +160,6 @@ ui <- fluidPage(
             value = 1,
             step = 0.5
           )
-        ),
-          
-        #Third Tab
-        tabPanel(
-          "All Play Types",
-          value = "pa_all",
-          plotOutput("density_ridges")
         )
       )
     )
@@ -130,58 +169,90 @@ ui <- fluidPage(
 
 server <- function(input, output, session){
   
+  output$num_slider1 <- renderUI({
+    
+    req(input$num_var1)
+    
+    sliderInput(
+      "num_range1",
+      label = paste("Filter", input$num_var1),
+      min = floor(min(nfl_data[[input$num_var1]], na.rm = TRUE)),
+      max = ceiling(max(nfl_data[[input$num_var1]], na.rm = TRUE)),
+      value = c(
+        floor(min(nfl_data[[input$num_var1]], na.rm = TRUE)),
+        ceiling(max(nfl_data[[input$num_var1]], na.rm = TRUE))
+      )
+    )
+  })
+  
+  output$num_slider2 <- renderUI({
+    
+    req(input$num_var2)
+    sliderInput(
+      "num_range2",
+      label = paste("Filter", input$num_var2),
+      min = floor(min(nfl_data[[input$num_var2]], na.rm = TRUE)),
+      max = ceiling(max(nfl_data[[input$num_var2]], na.rm = TRUE)),
+      value = c(
+        floor(min(nfl_data[[input$num_var2]], na.rm = TRUE)),
+        ceiling(max(nfl_data[[input$num_var2]], na.rm = TRUE))
+      )
+    )
+  })
+  
+  filtered_data <- eventReactive(input$apply, {
+    withProgress(
+      message = "Filtering Data...",
+      value = 1,
+      {
+        data <- nfl_data |>
+          filter(
+            posteam %in% input$team,
+            PlayType == input$playtype,
+            Season %in% input$season,
+            qtr %in% input$qtr,
+            down %in% input$down,
+            between(
+              .data[[input$num_var1]],
+              input$num_range1[1],
+              input$num_range1[2]
+              ),
+            between(
+              .data[[input$num_var2]],
+              input$num_range2[1],
+              input$num_range2[2]
+            ),
+          )
+        
+        if (input$defteam_filter == "specific") {
+          data <- data |>
+            filter(DefensiveTeam %in% input$defteam)
+        }
+        
+        data
+      }
+    )
+  })
+  
   output$histogram <- renderPlot({
     
     req(filtered_data())
 
     filtered_data() |>
-      ggplot(aes(x = filtered_data()$yards_gained)) +
+      ggplot(aes(x = .data[[input$num_var1]])) +
       geom_histogram(
         binwidth = input$binwidth,
         fill = "steelblue",
         color = "black"
       ) +
       labs(
-        title = paste("Yards Gained per", input$playtype, "for", input$team),
+        title = paste(input$num_var1, "per", input$playtype, "for", input$team),
         x = "Yards Gained",
         y = "Count"
       )
   })
   
-  output$density_ridges <- renderPlot({
-    req(input$pa)
-    req(filtered_data())
-    
-    
-    filtered_data() |>
-      ggplot(aes(
-        x = .data[[input$pa]],
-        y = PlayType,
-        fill = PlayType
-      )) +
-      geom_density_ridges(alpha = 0.7) +
-      labs(
-        title = paste("Distribution of", isolate(input$pa), "by Play Type"),
-        x = input$pa,
-        y = "Play Type"
-      ) +
-      theme(legend.position = "None") +
-      coord_cartesian(xlim = limits)
-  })
-  
-  
-  filtered_data <- eventReactive(input$apply, {
-    withProgress(
-      message = "Filtering Data...",
-      value = 1,
-      nfl_data |>
-        filter(
-          posteam == input$team,
-          PlayType == input$playtype,
-          Season %in% input$season
-      )
-    )
-  })
+
 }
 
 shinyApp(ui = ui, server = server)

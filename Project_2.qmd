@@ -33,14 +33,16 @@ all_nfl_data <- read_csv("data/NFL_play_data.csv") |>
         "JAC" = "JAX"
       )
     )
+  )|>
+  mutate(
+    qtr = factor(
+      qtr,
+      levels = c(1, 2, 3, 4, 5),
+      labels = c("1st", "2nd", "3rd", "4th", "OT")
+    )
   )
 ```
 
-
-```{r}
-dim(all_nfl_data)
-colnames(all_nfl_data)
-```
 ```{r}
 nfl_data <- all_nfl_data |>
   select(PlayType, posteam, yards_gained, down, qtr, 
@@ -280,7 +282,7 @@ ggplot(CAR2015_play_down_data,
 ggplot(
   CAR2015_play_down_data,
   aes(
-    x = factor(qtr),
+    x = qtr,
     y = yards_gained,
     color = PlayType
   )
@@ -299,7 +301,7 @@ ggplot(
 ggplot(
   CAR2015_play_down_data |> filter(DefensiveTeam == "ATL"),
   aes(
-    x = factor(qtr),
+    x = qtr,
     y = yards_gained,
     color = PlayType
   )
