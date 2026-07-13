@@ -13,15 +13,15 @@ library(ggplot2)
 library(shiny)
 library(DT)
 library(bslib)
-library(ggridges)
+library(ggbeeswarm)
 
 ```
 
 
-# Data Exploration
+# Prepare for My App
 
 ```{r}
-nfl_data <- read_csv("data/NFL_play_data.csv") |>
+all_nfl_data <- read_csv("data/NFL_play_data.csv") |>
   rename(yards_gained = Yards.Gained) |>
   #Need to change the name of a couple of teams to make sure that there are only 32 teams listed.
   mutate(
@@ -34,18 +34,27 @@ nfl_data <- read_csv("data/NFL_play_data.csv") |>
       )
     )
   )
+  
 
 ```
 
 
 ```{r}
-dim(nfl_data)
-colnames(nfl_data)
+dim(all_nfl_data)
+colnames(all_nfl_data)
 ```
 ```{r}
-unique(nfl_data$PlayType)
-
-table(nfl_data$PlayType)
+nfl_data <- all_nfl_data |>
+  select(PlayType, posteam, yards_gained, down, qtr, 
+         ydstogo, ScoreDiff, Season, PassOutcome, DefensiveTeam) |>
+    filter(!PlayType %in% c("End of Game", 
+                          "Extra Point", 
+                          "Half End", 
+                          "Kickoff", 
+                          "Quarter End",
+                          "Two Minute Warning",
+                          "Timeout",
+                          "No Play"))
 ```
 
 
@@ -71,25 +80,16 @@ CAR2015_play_type_table
 ```
 ```{r}
 CAR2015_play_down_data <- nfl_data |>
-  filter(!PlayType %in% c("End of Game", 
-                          "Extra Point", 
-                          "Half End", 
-                          "Kickoff", 
-                          "Quarter End",
-                          "Two Minute Warning",
-                          "Timeout",
-                          "No Play"),
-         posteam == "CAR",
-         Season == "2015")
+  filter(posteam == "CAR", Season == "2015")
 ```
 
 
 
 ```{r}
 CAR2015_play_table <- CAR2015_play_down_data |>
-  count(PlayType, down) |>
+  count(PlayType, qtr) |>
   pivot_wider(
-    names_from = down,
+    names_from = qtr,
     values_from = n,
     values_fill = 0
   )
@@ -99,14 +99,14 @@ CAR2015_play_table
 
 
 ```{r}
-WPA_sum_table <- CAR2015_play_down_data |>
+yds_sum_table <- CAR2015_play_down_data |>
   group_by(PlayType) |>
   summarize(
-    Mean = mean(WPA, na.rm = TRUE),
-    Median = median(WPA, na.rm = TRUE),
-    SD = sd(WPA, na.rm = TRUE),
-    Minimum = min(WPA, na.rm = TRUE),
-    Maximum = max(WPA, na.rm = TRUE),
+    Mean = mean(yards_gained, na.rm = TRUE),
+    Median = median(yards_gained, na.rm = TRUE),
+    SD = sd(yards_gained, na.rm = TRUE),
+    Minimum = min(yards_gained, na.rm = TRUE),
+    Maximum = max(yards_gained, na.rm = TRUE),
     Count = n(),
     .groups = "drop"
   ) |>
@@ -116,92 +116,57 @@ WPA_sum_table <- CAR2015_play_down_data |>
     decimals = 4
   ) |>
   tab_header(
-    title = "WPA Summary by Play Type"
+    title = "Yards Gained Summary by Play Type"
   )
 
-WPA_sum_table
+yds_sum_table
 ```
 
 
+
+
 ```{r}
-EPA_sum_table <- CAR2015_play_down_data |>
-  group_by(PlayType) |>
-  summarize(
-    Mean = mean(EPA, na.rm = TRUE),
-    Median = median(EPA, na.rm = TRUE),
-    SD = sd(EPA, na.rm = TRUE),
-    Minimum = min(EPA, na.rm = TRUE),
-    Maximum = max(EPA, na.rm = TRUE),
-    Count = n(),
-    .groups = "drop"
-  ) |>
-  gt() |>
-  fmt_number(
-    columns = c(Mean, Median, SD, Minimum, Maximum),
-    decimals = 4
-  ) |>
-  tab_header(
-    title = "EPA Summary by Play Type"
+ggplot(
+  CAR2015_play_down_data |> filter(PlayType == "Run", !is.na(yards_gained)),
+  aes(x = yards_gained)
+) +
+  geom_histogram(binwidth = 1,
+        fill = "steelblue",
+        color = "black") +
+  labs(
+    title = "Distribution of Yards Gained on Running Plays",
+    x = "Yards",
+    y = "Count"
   )
-
-EPA_sum_table
 ```
+
 
 ```{r}
 ggplot(
-  CAR2015_play_down_data |> filter(PlayType == "Run", !is.na(EPA)),
-  aes(x = EPA)
+  CAR2015_play_down_data |> filter(PlayType == "Pass", !is.na(yards_gained)),
+  aes(x = yards_gained)
 ) +
-  geom_histogram(binwidth = 0.25) +
+  geom_histogram(binwidth = 1,
+        fill = "steelblue",
+        color = "black") +
   labs(
-    title = "Distribution of EPA for Running Plays",
-    x = "Expected Points Added (EPA)",
-    y = "Count"
-  ) +
-  xlim(-8, 8) +
-```
-
-```{r}
-ggplot(
-  CAR2015_play_down_data |> filter(PlayType == "Pass", !is.na(EPA)),
-  aes(x = EPA)
-) +
-  geom_histogram(binwidth = 0.25) +
-  xlim(-8,8) +
-  labs(
-    title = "Distribution of EPA for Pass Plays",
-    x = "Expected Points Added (EPA)",
+    title = "Distribution of Yards Gained for Pass Plays",
+    x = "Yards",
     y = "Count"
   ) +
   theme_minimal()
 ```
-
-
 ```{r}
 ggplot(
-  CAR2015_play_down_data |> filter(PlayType == "Pass", !is.na(WPA)),
-  aes(x = WPA)
+  CAR2015_play_down_data |> filter(PlayType == "Pass", !is.na(yards_gained), PassOutcome == "Complete"),
+  aes(x = yards_gained)
 ) +
-  geom_histogram(binwidth = 0.025) +
-  xlim(-0.25, 0.25) +
+  geom_histogram(binwidth = 1,
+        fill = "steelblue",
+        color = "black") +
   labs(
-    title = "Distribution of WPA for Pass Plays",
-    x = "Win Probability Added (WPA)",
-    y = "Count"
-  ) +
-  theme_minimal()
-```
-
-```{r}
-ggplot(
-  CAR2015_play_down_data |> filter(PlayType == "Run", !is.na(WPA)),
-  aes(x = WPA)
-) +
-  geom_histogram(binwidth = 0.025) +
-  xlim(-0.2, 0.2) +
-  labs(
-    title = "Distribution of WPA for Run Plays",
-    x = "Win Probability Added (WPA)",
+    title = "Distribution of Yards Gained for Pass Plays",
+    x = "Yards",
     y = "Count"
   ) +
   theme_minimal()
@@ -209,26 +174,11 @@ ggplot(
 
 
 
-
-```{r}
-ggplot(
-  CAR2015_play_down_data |> filter(PlayType == "Pass", !is.na(EPA)),
-  aes(x = EPA, fill = PassOutcome)
-) +
-  geom_histogram(binwidth = 0.25) +
-  xlim(-8,8) +
-  labs(
-    title = "Distribution of EPA for Pass Plays by Pass Outcome",
-    x = "Expected Points Added (EPA)",
-    y = "Count"
-  ) +
-  theme_minimal()
-```
 
 ```{r}
 play_type_down_counts <- CAR2015_play_down_data |>
-  count(down, PlayType) |>
-  group_by(down) |>
+  count(qtr, PlayType) |>
+  group_by(qtr) |>
   arrange(desc(n)) 
 
 play_type_counts <- CAR2015_play_down_data |>
@@ -255,19 +205,20 @@ ggplot(play_type_counts,
 ```
 
 ```{r}
-ggplot(play_type_down_counts |> filter(!is.na(down)),
+ggplot(play_type_down_counts |> filter(!is.na(qtr)),
        aes(x = reorder(PlayType, -n),
            y = n,
            fill = PlayType)) +
   geom_col() +
-  facet_wrap(~down) +
+  facet_wrap(~qtr) +
   labs(
-    title = "Play Type Distribution by Down for Carolina Panthers in 2015",
+    title = "Play Type Distribution per Quarter for Carolina Panthers in 2015",
     x = "Play Type",
     y = "Number of Plays"
   ) +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1)
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "None"
   )
 ```
 
@@ -288,79 +239,82 @@ ggplot(CAR2015_play_down_data,
   )
 
 ```
+```{r}
+scr_diff_sum_table <- CAR2015_play_down_data |>
+  group_by(PlayType) |>
+  summarize(
+    Mean = mean(ScoreDiff, na.rm = TRUE),
+    Median = median(ScoreDiff, na.rm = TRUE),
+    SD = sd(ScoreDiff, na.rm = TRUE),
+    Minimum = min(ScoreDiff, na.rm = TRUE),
+    Maximum = max(ScoreDiff, na.rm = TRUE),
+    Count = n(),
+    .groups = "drop"
+  ) |>
+  gt() |>
+  fmt_number(
+    columns = c(Mean, Median, SD, Minimum, Maximum),
+    decimals = 4
+  ) |>
+  tab_header(
+    title = "Score Difference when Play Happened"
+  )
+
+scr_diff_sum_table
+```
+
 
 
 ```{r}
-ggplot(CAR2015_play_down_data |> filter(PassOutcome == "Complete"),
-       aes(AirYards,
+ggplot(CAR2015_play_down_data,
+       aes(ydstogo,
            yards_gained,
-           color = factor(Touchdown))) +
+           color = PlayType)) +
   geom_point(alpha = .67) +
-  scale_color_discrete(
-    name = "Result",
-    labels = c("No Touchdown", "Touchdown")) +
   labs(
-    title = "Yards Gained vs. Air Yards",
-    x = "Air Yards",
-    y = "Yards Gained"
+    title = "Yards Gained vs. Yards to Go",
+    x = "Yards Needed to Get First Down",
+    y = "Yards Gained from Play"
   )
 ```
 
 ```{r}
-ggplot(CAR2015_play_down_data |> filter(PassOutcome == "Complete"),
-       aes(AirYards,
-           YardsAfterCatch,
-           color = factor(Touchdown))) +
-  geom_point(alpha = .5) +
-  scale_color_discrete(
-    name = "Result",
-    labels = c("No Touchdown", "Touchdown")) +
-  labs(
-    title = "YAC vs. Air Yards",
-    x = "Air Yards",
-    y = "Yard After Catch",
+ggplot(
+  CAR2015_play_down_data,
+  aes(
+    x = factor(qtr),
+    y = yards_gained,
+    color = PlayType
   )
+) +
+  geom_quasirandom(alpha = 0.4, width = 0.25) +
+  labs(
+    title = "Distribution of Yards Gained by Down",
+    x = "Quarter",
+    y = "Yards Gained",
+    color = "Play Type"
+  ) +
+  theme_minimal()
 ```
-
-
-
-
-
 
 ```{r}
-
-CAR2015_play_down_data |>
-  filter(!is.na(EPA)) |>
-  ggplot(aes(
-    x = EPA,
-    y = PlayType,
-    fill = PlayType
-  )) +
-  geom_density_ridges(alpha = 0.7) +
+ggplot(
+  CAR2015_play_down_data |> filter(DefensiveTeam == "ATL"),
+  aes(
+    x = factor(qtr),
+    y = yards_gained,
+    color = PlayType
+  )
+) +
+  geom_quasirandom(alpha = 0.8, width = 0.25) +
   labs(
-    title = "Distribution of EPA by Play Type",
-    x = "Expected Points Added (EPA)",
-    y = "Play Type"
+    title = "Distribution of Yards Gained by Down vs. Atlanta Falcons",
+    x = "Quarter",
+    y = "Yards Gained",
+    color = "Play Type"
   ) +
-  theme(legend.position = "None")
+  theme_minimal()
 ```
 
 
-```{r}
-
-CAR2015_play_down_data |>
-  filter(!is.na(EPA)) |>
-  ggplot(aes(
-    x = WPA,
-    y = PlayType,
-    fill = PlayType
-  )) +
-  geom_density_ridges(alpha = 0.7) +
-  labs(
-    title = "Distribution of WPA by Play Type",
-    x = "Win Probability Added",
-    y = "Play Type"
-  ) +
-  theme(legend.position = "None")
-```
 
