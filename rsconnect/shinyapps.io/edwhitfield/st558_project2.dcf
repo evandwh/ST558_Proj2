@@ -5,7 +5,7 @@ account: edwhitfield
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 17608988
-bundleId: 12263940
+bundleId: 12263986
 url: https://edwhitfield.shinyapps.io/st558_project2/
 version: 1
 asMultiple: FALSE
