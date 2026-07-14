@@ -37,8 +37,17 @@ all_nfl_data <- read_csv("data/NFL_play_data.csv") |>
   )
 
 nfl_data <- all_nfl_data |>
-  select(PlayType, posteam, yards_gained, down, qtr, 
-         ydstogo, ScoreDiff, Season, PassOutcome, DefensiveTeam) |>
+  select(PlayType, 
+         posteam, 
+         yards_gained, 
+         down, 
+         qtr, 
+         ydstogo, 
+         yrdline100,
+         ScoreDiff, 
+         Season, 
+         PassOutcome, 
+         DefensiveTeam) |>
   filter(!PlayType %in% c("End of Game", 
                           "Extra Point", 
                           "Half End", 
@@ -86,7 +95,8 @@ ui <- fluidPage(
         choices = c(
           "Yards Gained" = "yards_gained",
           "Yards to Go" = "ydstogo",
-          "Score Differential" = "ScoreDiff"
+          "Score Differential" = "ScoreDiff",
+          "Yard Line (100)" = "yrdline100"
         ),
         selected = "yards_gained"
       ),
@@ -97,7 +107,8 @@ ui <- fluidPage(
         choices = c(
           "Yards Gained" = "yards_gained",
           "Yards to Go" = "ydstogo",
-          "Score Differential" = "ScoreDiff"
+          "Score Differential" = "ScoreDiff",
+          "Yard Line (100)" = "yrdline100"
         ),
         selected = "ydstogo"
       ),
