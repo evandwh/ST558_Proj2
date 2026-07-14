@@ -235,15 +235,9 @@ ui <- fluidPage(
             tabPanel(
               "Other Graphs",
               
-              plotOutput("scatterplot"),
+              h3("Distribution Plot"),
               
-              br(),
-              
-              plotOutput("boxplot"),
-              
-              br(),
-              
-              plotOutput("heatmap")
+              plotOutput("yards_quasirandom")
             )
         )
       )
@@ -497,6 +491,36 @@ server <- function(input, output, session){
         )
       )
     
+  })
+  
+  output$yards_quasirandom <- renderPlot({
+    
+    req(app_state())
+    
+    state <- app_state()
+    
+    state$data |>
+      ggplot(
+        aes(
+          x = factor(qtr),
+          y = .data[[state$num_var1]],
+          color = PlayType
+        )
+      ) +
+      geom_quasirandom(
+        alpha = 0.8,
+        width = 0.25
+      ) +
+      labs(
+        title = paste(
+          "Distribution of",
+          state$num_var1,
+          "by Quarter"
+        ),
+        x = "Quarter",
+        y = state$num_var1,
+        color = "Play Type"
+      )
   })
 
   app_state <- eventReactive(input$apply, {
