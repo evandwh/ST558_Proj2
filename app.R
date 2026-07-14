@@ -225,8 +225,8 @@ ui <- fluidPage(
             # -------------------
             tabPanel(
               "Numeric Summaries",
-              
-              gt_output("numeric_summary")
+              h3("Summary by Play Type", center = "align"),
+              gt_output("yds_sum_table")
             ),
             
             # -------------------
@@ -306,7 +306,8 @@ server <- function(input, output, session){
               input$num_range2[1],
               input$num_range2[2]
             )
-          )
+          ) |>
+          droplevels()
         
         if (input$defteam_filter == "specific") {
           data <- data |>
@@ -416,18 +417,25 @@ server <- function(input, output, session){
     
     state$data |>
       count(PlayType, down) |>
+      mutate(
+        down = factor(
+          down,
+          levels = c(1, 2, 3, 4)
+        )
+      ) |>
       pivot_wider(
         names_from = down,
         values_from = n,
         values_fill = 0
       ) |>
+      select(PlayType, '1', '2','3', '4') |>
       gt() |>
       cols_label(
         PlayType = "Play Type",
         `1` = "1st",
         `2` = "2nd",
         `3` = "3rd",
-        `4` = "4th",
+        `4` = "4th"
       ) |>
       opt_row_striping()
   })
@@ -445,18 +453,52 @@ server <- function(input, output, session){
         values_from = n,
         values_fill = 0
       ) |>
+      select(PlayType, any_of(c('1st', '2nd','3rd', '4th', 'OT'))) |>
       gt() |>
-      cols_label(
-        PlayType = "Play Type",
-        `1st` = "1st",
-        `2nd` = "2nd",
-        `3rd` = "3rd",
-        `4th` = "4th",
-        `OT` = "Overtime"
-      ) |>
       opt_row_striping()
   })
   
+  output$yds_sum_table <- render_gt({
+    
+    req(app_state())
+    
+    state <- app_state()
+    
+    state$data |>
+      group_by(PlayType) |>
+      summarize(
+        Mean = mean(.data[[state$num_var1]], na.rm = TRUE),
+        Median = median(.data[[state$num_var1]], na.rm = TRUE),
+        SD = sd(.data[[state$num_var1]], na.rm = TRUE),
+        Minimum = min(.data[[state$num_var1]], na.rm = TRUE),
+        Maximum = max(.data[[state$num_var1]], na.rm = TRUE),
+        Count = sum(!is.na(.data[[state$num_var1]])),
+        .groups = "drop"
+      ) |>
+      gt() |>
+      fmt_number(
+        columns = c(Mean, Median, SD, Minimum, Maximum),
+        decimals = 4
+      ) |>
+      cols_label(
+        PlayType = "Play Type",
+        Mean = "Mean",
+        Median = "Median",
+        SD = "Standard Deviation",
+        Minimum = "Minimum",
+        Maximum = "Maximum",
+        Count = "Count"
+      ) |>
+      tab_header(
+        title = paste(
+          "Summary of",
+          state$num_var1,
+          "by Play Type"
+        )
+      )
+    
+  })
+
   app_state <- eventReactive(input$apply, {
     list(
       data = filtered_data(),
