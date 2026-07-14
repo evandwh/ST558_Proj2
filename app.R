@@ -144,11 +144,47 @@ ui <- fluidPage(
         tabPanel(
           "About the Project",
           value = "about",
-          h2("About the App"),
-          h5("More info about the data can be found at 
-             https://www.kaggle.com/datasets/maxhorowitz/nflplaybyplay2009to2016/data")
-        ),
+          h2("NFL Play-by-Play Data Explorer"),
           
+          p(
+            "This interactive Shiny application allows users to explore NFL play-by-play data ",
+            "from the 2009 through 2016 regular seasons. Users can filter the data by season, ",
+            "offensive team, defensive team, play type (just run and pass), quarter, down, and 
+            additional variables to investigate offensive tendencies and game situations."
+          ),
+          
+          p(
+            "The application provides interactive visualizations, categorical summaries, ",
+            "numerical summaries, and downloadable filtered datasets to help users analyze ",
+            "NFL play-calling behavior and play outcomes."
+          ),
+          
+          p(
+            "More information about the data and can be found at the website below."
+          ),
+          
+          p(
+            tags$a(
+              href = "https://www.kaggle.com/datasets/maxhorowitz/nflplaybyplay2009to2016/data",
+              "View the dataset on Kaggle",
+              target = "_blank"
+            )
+          ),
+          
+          p(
+            "I would like to add much more functionality and change the look of the App in the",
+            "future. Future plans include including all play types to be filtered. EPA and WPA",
+            "were planned to be the main focus of this project, but were scrapped due to some",
+            "of the project requirements. I would like to add further exploration into those variables."
+          ),
+          
+          br(),
+          
+          p(
+            em("Created for project 2 for ST 558.")
+          )
+        ),
+        
         #Second Tab
         tabPanel(
           "Data Download",
@@ -235,9 +271,13 @@ ui <- fluidPage(
             tabPanel(
               "Other Graphs",
               
-              h3("Scatterplot", align = "center"),
+              h3("Scatterplot of Yards on different plays", align = "center"),
               
               plotOutput("scatterplot"),
+              
+              h3("Play Type Distribution by Quarter", align = "center"),
+              
+              plotOutput("playtype_quarter_bar"),
               
               h3("Distribution Plot", align = "center"),
               
@@ -565,6 +605,39 @@ server <- function(input, output, session){
     
   })
   
+  
+  output$playtype_quarter_bar <- renderPlot({
+    
+    req(app_state())
+    
+    state <- app_state()
+    
+    play_type_qtr_counts <- state$data |>
+      count(qtr, PlayType)
+    
+    ggplot(
+      play_type_qtr_counts |> filter(!is.na(qtr)),
+      aes(
+        x = reorder(PlayType, -n),
+        y = n,
+        fill = PlayType
+      )
+    ) +
+      geom_col() +
+      facet_wrap(~qtr) +
+      labs(
+        title = "Play Type Distribution by Quarter",
+        x = "Play Type",
+        y = "Number of Plays"
+      ) +
+      theme_minimal() +
+      theme(
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none",
+        plot.title = element_text(hjust = 0.5)
+      )
+    
+  })
 }
 
 shinyApp(ui = ui, server = server)
