@@ -14,10 +14,10 @@ library(ggplot2)
 library(shiny)
 library(DT)
 library(bslib)
+library(ggbeeswarm)
 
 all_nfl_data <- read_csv("data/NFL_play_data.csv") |>
   rename(yards_gained = Yards.Gained) |>
-  #Need to change the name of a couple of teams to make sure that there are only 32 teams listed.
   mutate(
     across(
       c(posteam, DefensiveTeam, HomeTeam, AwayTeam),
@@ -51,10 +51,14 @@ nfl_data <- all_nfl_data |>
 ui <- fluidPage(
   pageWithSidebar(
     
-    #Title Panel
+    # -------------------
+    # Title
+    # -------------------
     headerPanel("NFL Play Data (2009-2016)"),
     
-    #Sidebar
+    # -------------------
+    # Sidebar
+    # -------------------
     sidebarPanel(
         
       selectInput(
@@ -83,7 +87,8 @@ ui <- fluidPage(
           "Yards Gained" = "yards_gained",
           "Yards to Go" = "ydstogo",
           "Score Differential" = "ScoreDiff"
-        )
+        ),
+        selected = "yards_gained"
       ),
       uiOutput("num_slider1"),
       selectInput(
@@ -93,7 +98,8 @@ ui <- fluidPage(
           "Yards Gained" = "yards_gained",
           "Yards to Go" = "ydstogo",
           "Score Differential" = "ScoreDiff"
-        )
+        ),
+        selected = "ydstogo"
       ),
       uiOutput("num_slider2"),
       selectInput(
@@ -135,12 +141,16 @@ ui <- fluidPage(
       )
     ),
     
-    #Main Area
+    # -------------------
+    # Main Panel
+    # -------------------
     mainPanel(
       tabsetPanel(
         id = "tabs",
           
-        #First Tab
+        # -------------------
+        # About Section
+        # -------------------
         tabPanel(
           "About the Project",
           value = "about",
@@ -185,7 +195,9 @@ ui <- fluidPage(
           )
         ),
         
-        #Second Tab
+        # -------------------
+        # Data Download
+        # -------------------
         tabPanel(
           "Data Download",
           value = "download",
@@ -197,7 +209,9 @@ ui <- fluidPage(
           )
         ),
           
-        # Third Tab
+        # -------------------
+        # Data Exploration
+        # -------------------
         tabPanel(
           "Data Exploration",
           value = "explore",
@@ -207,6 +221,7 @@ ui <- fluidPage(
             # -------------------
             # Histograms
             # -------------------
+            
             tabPanel(
               "Histograms",
               
@@ -238,6 +253,7 @@ ui <- fluidPage(
             # -------------------
             # Categorical Summaries
             # -------------------
+            
             tabPanel(
               "Categorical Summaries",
               
@@ -259,6 +275,7 @@ ui <- fluidPage(
             # -------------------
             # Numeric Summaries
             # -------------------
+            
             tabPanel(
               "Numeric Summaries",
               h3("Summary by Play Type", center = "align"),
@@ -268,6 +285,7 @@ ui <- fluidPage(
             # -------------------
             # Other Graphs
             # -------------------
+            
             tabPanel(
               "Other Graphs",
               
