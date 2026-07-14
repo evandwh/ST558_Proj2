@@ -293,6 +293,10 @@ ui <- fluidPage(
               
               plotOutput("scatterplot"),
               
+              h3("Boxplot Comparison of Play Types", align = "center"),
+              
+              plotOutput("boxplot"),
+              
               h3("Play Type Distribution by Quarter", align = "center"),
               
               plotOutput("playtype_quarter_bar"),
@@ -621,6 +625,28 @@ server <- function(input, output, session){
         color = "Play Type"
       )
     
+  })
+  
+  output$boxplot <- renderPlot({
+    
+    req(app_state())
+    
+    state <- app_state()
+    
+    state$data |>
+      ggplot(
+        aes(PlayType,
+            y = .data[[state$num_var1]],
+            fill = PlayType)) +
+      geom_boxplot() +
+      labs(
+        title = paste(state$num_var1, "When Play Type Called"),
+        x = "Play Type",
+        y = state$num_var1
+      ) + 
+      theme(legend.position = "None",
+            plot.title = element_text(hjust = 0.5)
+      )
   })
   
   

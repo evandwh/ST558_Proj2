@@ -19,11 +19,10 @@ library(ggbeeswarm)
 
 
 # Prepare for My App
-
 ```{r}
+#Fixing some issues that arose with team names and Overtime.
 all_nfl_data <- read_csv("data/NFL_play_data.csv") |>
   rename(yards_gained = Yards.Gained) |>
-  #Need to change the name of a couple of teams to make sure that there are only 32 teams listed.
   mutate(
     across(
       c(posteam, DefensiveTeam, HomeTeam, AwayTeam),
@@ -33,7 +32,7 @@ all_nfl_data <- read_csv("data/NFL_play_data.csv") |>
         "JAC" = "JAX"
       )
     )
-  )|>
+  ) |>
   mutate(
     qtr = factor(
       qtr,
@@ -44,17 +43,29 @@ all_nfl_data <- read_csv("data/NFL_play_data.csv") |>
 ```
 
 ```{r}
+#Filtering out and selecting only the data that is valuable for this project
 nfl_data <- all_nfl_data |>
-  select(PlayType, posteam, yards_gained, down, qtr, 
-         ydstogo, ScoreDiff, Season, PassOutcome, DefensiveTeam) |>
-    filter(!PlayType %in% c("End of Game", 
+  select(PlayType, 
+         posteam, 
+         yards_gained,
+         yrdline100,
+         down, 
+         qtr, 
+         ydstogo, 
+         ScoreDiff, 
+         Season, 
+         PassOutcome, 
+         DefensiveTeam
+  ) |>
+  filter(!PlayType %in% c("End of Game", 
                           "Extra Point", 
                           "Half End", 
                           "Kickoff", 
                           "Quarter End",
                           "Two Minute Warning",
                           "Timeout",
-                          "No Play"))
+                          "No Play")
+  )
 ```
 
 
@@ -86,6 +97,7 @@ CAR2015_play_down_data <- nfl_data |>
 
 
 ```{r}
+#This was not a gt() in the static form, but I changed it to one in the App.
 CAR2015_play_table <- CAR2015_play_down_data |>
   count(PlayType, qtr) |>
   pivot_wider(
@@ -97,8 +109,23 @@ CAR2015_play_table <- CAR2015_play_down_data |>
 CAR2015_play_table
 ```
 
+```{r}
+#This was not a gt() in the static form, but I changed it to one in the App.
+CAR2015_play_table2 <- CAR2015_play_down_data |>
+  count(PlayType, down) |>
+  pivot_wider(
+    names_from = down,
+    values_from = n,
+    values_fill = 0
+  )
+
+CAR2015_play_table2
+```
+
+
 
 ```{r}
+#Numerical Summary Table
 yds_sum_table <- CAR2015_play_down_data |>
   group_by(PlayType) |>
   summarize(
@@ -187,22 +214,6 @@ play_type_counts <- CAR2015_play_down_data |>
 ```
 
 
-```{r}
-ggplot(play_type_counts,
-       aes(x = reorder(PlayType, -n), y = n, fill = PlayType)) +
-  geom_col() +
-  geom_text(
-    aes(label = n),
-    vjust = -0.5
-  ) +
-  labs(
-    title = "Carolina Panthers 2015 Season Play Types",
-    x = "Play Type",
-    y = "Count"
-  ) +
-  theme_minimal() +
-  theme(legend.position = "none")
-```
 
 ```{r}
 ggplot(play_type_down_counts |> filter(!is.na(qtr)),
@@ -239,6 +250,8 @@ ggplot(CAR2015_play_down_data,
   )
 
 ```
+
+
 ```{r}
 scr_diff_sum_table <- CAR2015_play_down_data |>
   group_by(PlayType) |>
