@@ -235,7 +235,11 @@ ui <- fluidPage(
             tabPanel(
               "Other Graphs",
               
-              h3("Distribution Plot"),
+              h3("Scatterplot", align = "center"),
+              
+              plotOutput("scatterplot"),
+              
+              h3("Distribution Plot", align = "center"),
               
               plotOutput("yards_quasirandom")
             )
@@ -531,6 +535,36 @@ server <- function(input, output, session){
     )
   })
 
+  output$scatterplot <- renderPlot({
+    
+    req(app_state())
+    
+    state <- app_state()
+    
+    state$data |>
+      ggplot(
+        aes(
+          x = .data[[state$num_var1]],
+          y = .data[[state$num_var2]],
+          color = PlayType
+        )
+      ) +
+      geom_point(
+        alpha = 0.6
+      ) +
+      labs(
+        title = paste(
+          state$num_var2,
+          "vs.",
+          state$num_var1
+        ),
+        x = state$num_var1,
+        y = state$num_var2,
+        color = "Play Type"
+      )
+    
+  })
+  
 }
 
 shinyApp(ui = ui, server = server)
